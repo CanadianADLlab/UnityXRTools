@@ -322,3 +322,15 @@ public class XRCrossPlatformInputManager : MonoBehaviour
 
     #endregion
 }
+/// <summary>
+/// Handles all the input 
+/// </summary>
+/// 
+public enum ButtonTypes
+{
+    Grip,
+    Primary,
+    Secondary,
+    Trigger
+}
+
