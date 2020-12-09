@@ -26,6 +26,13 @@ public class XRCrossPlatformInputManager : MonoBehaviour
     private bool leftSecondaryButtonWasPressed = false;
     private bool rightSecondaryButtonWasPressed = false;
 
+
+    private bool leftMenuButtonWasPressed = false;
+    private bool rightMenuButtonWasPressed = false;
+
+    private bool leftStickWasPressed = false;
+    private bool rightStickWasPressed = false;
+
     // public bools
 
     [HideInInspector]
@@ -69,6 +76,26 @@ public class XRCrossPlatformInputManager : MonoBehaviour
     [HideInInspector]
     public bool RightSecondaryButtonDown = false;
 
+    [HideInInspector]
+    public bool LeftMenuButtonDown = false;
+    [HideInInspector]
+    public bool RightMenuButtonDown = false;
+
+    [HideInInspector]
+    public bool LeftMenuButtonPressed = false;
+    [HideInInspector]
+    public bool RightMenuButtonPressed = false;
+
+    [HideInInspector]
+    public bool LeftStickDown = false;
+    [HideInInspector]
+    public bool RightStickDown = false;
+
+    [HideInInspector]
+    public bool LeftStickPressed = false;
+    [HideInInspector]
+    public bool RightStickPressed = false;
+
     // public vectors
     [HideInInspector]
     public Vector2 LeftStickAxis;
@@ -95,6 +122,8 @@ public class XRCrossPlatformInputManager : MonoBehaviour
         GetJoyStickAxisInput();
         GetPrimaryButtonInput();
         GetSecondaryButtonInput();
+        GetMenuButtonInputs();
+        GetStickPressedInputs();
     }
 
 
@@ -166,10 +195,6 @@ public class XRCrossPlatformInputManager : MonoBehaviour
         rightPrimaryButtonWasPressed = RightPrimaryButtonPressed; // Check before input so its the value last frame
         leftHandDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primaryButton, out LeftPrimaryButtonPressed);
         rightHandDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primaryButton, out RightPrimaryButtonPressed);
-        print("Left Primary pressed " + LeftPrimaryButtonPressed);
-        print("Right Primary pressed " + RightPrimaryButtonPressed);
-        print("Left Primary down " + LeftPrimaryButtonDown);
-        print("Right Primary down " + RightPrimaryButtonDown);
 
         if (LeftPrimaryButtonPressed)
         {
@@ -200,10 +225,7 @@ public class XRCrossPlatformInputManager : MonoBehaviour
         leftHandDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.secondaryButton, out LeftSecondaryButtonPressed);
         rightHandDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.secondaryButton, out RightSecondaryButtonPressed);
 
-        print("Left Secondary pressed " + LeftSecondaryButtonPressed);
-        print("Right Secondary pressed " + RightSecondaryButtonPressed);
-        print("Left Secondary down " + LeftSecondaryButtonDown);
-        print("Right Secondary down " + RightSecondaryButtonDown);
+    
         if (LeftSecondaryButtonPressed)
         {
             LeftSecondaryButtonDown = false;
@@ -223,6 +245,64 @@ public class XRCrossPlatformInputManager : MonoBehaviour
         }
     }
 
+
+    /// <summary>
+    /// Grabs menu button inputs, right menu button on the oculus is the actual home menu and doesn't work so we should never use that
+    /// </summary>
+    private void GetMenuButtonInputs()
+    {
+        leftMenuButtonWasPressed = LeftMenuButtonPressed; // Check before input so its the value last frame
+        rightMenuButtonWasPressed = RightMenuButtonPressed; // Check before input so its the value last frame
+        leftHandDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.menuButton, out LeftMenuButtonPressed);
+        rightHandDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.menuButton, out RightMenuButtonPressed);
+
+        if (LeftMenuButtonPressed)
+        {
+            LeftMenuButtonDown = false;
+        }
+        if (LeftMenuButtonPressed && !leftMenuButtonWasPressed)
+        {
+            LeftMenuButtonDown = true;
+        }
+
+        if (RightMenuButtonPressed)
+        {
+            RightMenuButtonDown = false;
+        }
+        if (RightMenuButtonPressed && !rightMenuButtonWasPressed)
+        {
+            RightMenuButtonDown = true;
+        }
+    }
+
+    /// <summary>
+    /// Stick inputs (Maybe shouldn't be called stick because on some devices it might not be)
+    /// </summary>
+    private void GetStickPressedInputs()
+    {
+        leftStickWasPressed = LeftStickPressed; // Check before input so its the value last frame
+        rightStickWasPressed = RightStickPressed; // Check before input so its the value last frame
+        leftHandDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primary2DAxisClick, out LeftStickPressed);
+        rightHandDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primary2DAxisClick, out RightStickPressed);
+        
+        if (LeftStickPressed)
+        {
+            LeftStickDown = false;
+        }
+        if (LeftStickPressed && !leftStickWasPressed)
+        {
+            LeftStickDown = true;
+        }
+
+        if (RightStickPressed)
+        {
+            RightStickDown = false;
+        }
+        if (RightStickPressed && !rightStickWasPressed)
+        {
+            RightStickDown = true;
+        }
+    }
 
     #region singleton
 
