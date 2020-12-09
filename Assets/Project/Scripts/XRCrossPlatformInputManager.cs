@@ -20,6 +20,12 @@ public class XRCrossPlatformInputManager : MonoBehaviour
     private bool leftGripWasPressed = false;
     private bool rightGripWasPressed = false;
 
+    private bool leftPrimaryButtonWasPressed = false;
+    private bool rightPrimaryButtonWasPressed = false;
+
+    private bool leftSecondaryButtonWasPressed = false;
+    private bool rightSecondaryButtonWasPressed = false;
+
     // public bools
 
     [HideInInspector]
@@ -41,6 +47,27 @@ public class XRCrossPlatformInputManager : MonoBehaviour
     public bool LeftGripDown = false;
     [HideInInspector]
     public bool RightGripDown = false;
+
+
+    [HideInInspector]
+    public bool LeftPrimaryButtonPressed = false;
+    [HideInInspector]
+    public bool RightPrimaryButtonPressed = false;
+
+    [HideInInspector]
+    public bool LeftSecondaryButtonPressed = false;
+    [HideInInspector]
+    public bool RightSecondaryButtonPressed = false;
+
+    [HideInInspector]
+    public bool LeftPrimaryButtonDown = false;
+    [HideInInspector]
+    public bool RightPrimaryButtonDown = false;
+
+    [HideInInspector]
+    public bool LeftSecondaryButtonDown = false;
+    [HideInInspector]
+    public bool RightSecondaryButtonDown = false;
 
     // public vectors
     [HideInInspector]
@@ -66,6 +93,8 @@ public class XRCrossPlatformInputManager : MonoBehaviour
         GetTriggerInput();
         GetGripInput();
         GetJoyStickAxisInput();
+        GetPrimaryButtonInput();
+        GetSecondaryButtonInput();
     }
 
 
@@ -126,9 +155,72 @@ public class XRCrossPlatformInputManager : MonoBehaviour
     {
         leftHandDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primary2DAxis, out LeftStickAxis);
         rightHandDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primary2DAxis, out RightStickAxis);
+    }
 
-        print("Left hand axis " + LeftStickAxis);
-        print("Right hand axis " + RightStickAxis);
+    /// <summary>
+    /// Gets the input of what ever the primary button is on each controller
+    /// </summary>
+    private void GetPrimaryButtonInput()
+    {
+        leftPrimaryButtonWasPressed = LeftPrimaryButtonPressed; // Check before input so its the value last frame
+        rightPrimaryButtonWasPressed = RightPrimaryButtonPressed; // Check before input so its the value last frame
+        leftHandDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primaryButton, out LeftPrimaryButtonPressed);
+        rightHandDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primaryButton, out RightPrimaryButtonPressed);
+        print("Left Primary pressed " + LeftPrimaryButtonPressed);
+        print("Right Primary pressed " + RightPrimaryButtonPressed);
+        print("Left Primary down " + LeftPrimaryButtonDown);
+        print("Right Primary down " + RightPrimaryButtonDown);
+
+        if (LeftPrimaryButtonPressed)
+        {
+            LeftPrimaryButtonDown = false;
+        }
+        if (LeftPrimaryButtonPressed && !leftPrimaryButtonWasPressed)
+        {
+            LeftPrimaryButtonDown = true;
+        }
+
+        if (RightPrimaryButtonPressed)
+        {
+            RightPrimaryButtonDown = false;
+        }
+        if (RightPrimaryButtonPressed && !rightPrimaryButtonWasPressed)
+        {
+            RightPrimaryButtonDown = true;
+        }
+    }
+
+    /// <summary>
+    /// Gets the input of what ever the secondary button is on each controller
+    /// </summary>
+    private void GetSecondaryButtonInput()
+    {
+        leftSecondaryButtonWasPressed = LeftSecondaryButtonPressed; // Check before input so its the value last frame
+        rightSecondaryButtonWasPressed = RightSecondaryButtonPressed; // Check before input so its the value last frame
+        leftHandDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.secondaryButton, out LeftSecondaryButtonPressed);
+        rightHandDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.secondaryButton, out RightSecondaryButtonPressed);
+
+        print("Left Secondary pressed " + LeftSecondaryButtonPressed);
+        print("Right Secondary pressed " + RightSecondaryButtonPressed);
+        print("Left Secondary down " + LeftSecondaryButtonDown);
+        print("Right Secondary down " + RightSecondaryButtonDown);
+        if (LeftSecondaryButtonPressed)
+        {
+            LeftSecondaryButtonDown = false;
+        }
+        if (LeftSecondaryButtonPressed && !leftSecondaryButtonWasPressed)
+        {
+            LeftSecondaryButtonDown = true;
+        }
+
+        if (RightSecondaryButtonPressed)
+        {
+            RightSecondaryButtonDown = false;
+        }
+        if (RightSecondaryButtonPressed && !rightSecondaryButtonWasPressed)
+        {
+            RightSecondaryButtonDown = true;
+        }
     }
 
 
