@@ -17,14 +17,26 @@ public class XRCrossPlatformInputManager : MonoBehaviour
     private bool leftTriggerWasPressed = false;
     private bool rightTriggerWasPressed = false;
 
+    private bool leftGripWasPressed = false;
+    private bool rightGripWasPressed = false;
+
     // public bools
 
     public bool LeftTriggerPressed = false;
     public bool RightTriggerPressed = false;
 
 
+
+
     public bool LeftTriggerDown = false;
     public bool RightTriggerDown = false;
+
+    public bool LeftGripPressed = false;
+    public bool RightGripPressed = false;
+
+
+    public bool LeftGripDown = false;
+    public bool RightGripDown = false;
 
 
     void Start()
@@ -42,6 +54,7 @@ public class XRCrossPlatformInputManager : MonoBehaviour
     void Update()
     {
         GetTriggerInputs();
+        GetGripInputs();
     }
 
 
@@ -72,6 +85,37 @@ public class XRCrossPlatformInputManager : MonoBehaviour
         if (RightTriggerPressed && !rightTriggerWasPressed)
         {
             RightTriggerDown = true;
+        }
+    }
+
+
+    private void GetGripInputs()
+    {
+        print("Here left grip " + LeftGripPressed);
+        print("Here right grip " + RightGripPressed);
+        print("Here left down grip " + LeftGripDown);
+        print("Here right down grip " + RightGripDown);
+        leftGripWasPressed = LeftGripPressed; // Check before input so its the value last frame
+        rightGripWasPressed = RightGripPressed; // Check before input so its the value last frame
+        leftHandDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.gripButton, out LeftGripPressed);
+        rightHandDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.gripButton, out RightGripPressed);
+
+        if (LeftGripPressed)
+        {
+            LeftGripDown = false;
+        }
+        if (LeftGripPressed && !leftGripWasPressed)
+        {
+            LeftGripDown = true;
+        }
+
+        if (RightGripPressed)
+        {
+            RightGripDown = false;
+        }
+        if (RightGripPressed && !rightGripWasPressed)
+        {
+            RightGripDown = true;
         }
     }
 
