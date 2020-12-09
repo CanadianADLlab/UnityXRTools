@@ -22,21 +22,31 @@ public class XRCrossPlatformInputManager : MonoBehaviour
 
     // public bools
 
+    [HideInInspector]
     public bool LeftTriggerPressed = false;
+    [HideInInspector]
     public bool RightTriggerPressed = false;
 
-
-
-
+    [HideInInspector]
     public bool LeftTriggerDown = false;
+    [HideInInspector]
     public bool RightTriggerDown = false;
 
+    [HideInInspector]
     public bool LeftGripPressed = false;
+    [HideInInspector]
     public bool RightGripPressed = false;
 
-
+    [HideInInspector]
     public bool LeftGripDown = false;
+    [HideInInspector]
     public bool RightGripDown = false;
+
+    // public vectors
+    [HideInInspector]
+    public Vector2 LeftStickAxis;
+    [HideInInspector]
+    public Vector2 RightStickAxis;
 
 
     void Start()
@@ -53,17 +63,14 @@ public class XRCrossPlatformInputManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        GetTriggerInputs();
-        GetGripInputs();
+        GetTriggerInput();
+        GetGripInput();
+        GetJoyStickAxisInput();
     }
 
 
-    private void GetTriggerInputs()
+    private void GetTriggerInput()
     {
-        print("Here left " + LeftTriggerPressed);
-        print("Here right " + RightTriggerPressed);
-        print("Here left down " + LeftTriggerDown);
-        print("Here right down " + RightTriggerDown);
         leftTriggerWasPressed = LeftTriggerPressed; // Check before input so its the value last frame
         rightTriggerWasPressed = RightTriggerPressed; // Check before input so its the value last frame
         leftHandDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.triggerButton, out LeftTriggerPressed);
@@ -89,12 +96,8 @@ public class XRCrossPlatformInputManager : MonoBehaviour
     }
 
 
-    private void GetGripInputs()
+    private void GetGripInput()
     {
-        print("Here left grip " + LeftGripPressed);
-        print("Here right grip " + RightGripPressed);
-        print("Here left down grip " + LeftGripDown);
-        print("Here right down grip " + RightGripDown);
         leftGripWasPressed = LeftGripPressed; // Check before input so its the value last frame
         rightGripWasPressed = RightGripPressed; // Check before input so its the value last frame
         leftHandDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.gripButton, out LeftGripPressed);
@@ -117,6 +120,15 @@ public class XRCrossPlatformInputManager : MonoBehaviour
         {
             RightGripDown = true;
         }
+    }
+
+    private void GetJoyStickAxisInput()
+    {
+        leftHandDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primary2DAxis, out LeftStickAxis);
+        rightHandDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primary2DAxis, out RightStickAxis);
+
+        print("Left hand axis " + LeftStickAxis);
+        print("Right hand axis " + RightStickAxis);
     }
 
 
