@@ -16,6 +16,9 @@ public class InteractableSecondaryGrab : MonoBehaviour
     [HideInInspector]
     public bool IsGrabbed = false;
 
+    [Tooltip("Some guns are backwards enable this to make it correct")]
+    public bool ReverseGrabLook = false;
+
   
 
     private InteractableObject mainGrab;
@@ -28,6 +31,8 @@ public class InteractableSecondaryGrab : MonoBehaviour
 
     private bool rightButtonPressed = false;
     private bool leftButtonPressed = false;
+
+
 
 
 
@@ -79,14 +84,27 @@ public class InteractableSecondaryGrab : MonoBehaviour
         if (IsGrabbed && IsGrabbedRight)
         {
             // Maybe add an offset to move down
-            // transform.LookAt((2 * transform.position - rightController.transform.position)); // Look backwards
-            transform.LookAt((rightController.transform.position));
+            if (ReverseGrabLook)
+            {
+                transform.LookAt((2 * transform.position - rightController.transform.position)); // Look backwards
+            }
+            else
+            {
+                transform.LookAt((rightController.transform.position));
+            }
+
             transform.position = leftController.transform.position;
         }
         if (IsGrabbed && IsGrabbedLeft)
         {
-            //  transform.LookAt((2 * transform.position  -leftController.transform.position)); // Look backwards
-            transform.LookAt((leftController.transform.position));
+            if (ReverseGrabLook)
+            {
+                transform.LookAt((2 * transform.position  -leftController.transform.position)); // Look backwards
+            }
+            else
+            {
+                transform.LookAt((leftController.transform.position));
+            }
             transform.position = rightController.transform.position;
         }
 
