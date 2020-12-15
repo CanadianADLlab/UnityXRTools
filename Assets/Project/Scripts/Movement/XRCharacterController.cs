@@ -88,26 +88,22 @@ namespace XRCrossPlatformInput
         {
             if (leftController.IsGrabbing && !ignoringLeftHand)
             {
-                print("Ignoring Colliders Left");
                 IgnoreChildrenColliders(leftController.transform);
                 ignoringLeftHand = true;
             }
             else if (ignoringLeftHand && !leftController.IsGrabbing)
             {
-                print("Enable Colliders Left");
                 ignoringLeftHand = false;
                 IgnoreChildrenColliders(leftController.transform, ignoringLeftHand); // Passing false re enables zee collider
             }
             print("Right is grabbing  " + rightController.transform.name  +" : "  + rightController.IsGrabbing);
             if (rightController.IsGrabbing && !ignoringRightHand)
             {
-                print("Ignoring Colliders Right");
                 IgnoreChildrenColliders(rightController.transform);
                 ignoringRightHand = true;
             }
             else if (ignoringRightHand && !rightController.IsGrabbing)
             {
-                print("Enable Colliders Right");
                 ignoringRightHand = false;
                 IgnoreChildrenColliders(rightController.transform, ignoringRightHand);
             }
@@ -185,16 +181,13 @@ namespace XRCrossPlatformInput
 
             if (XRCrossPlatformInputManager.Instance.RightStickAxis.x <= -0.9f && goodToRotateLeft)
             {
-
-                RotatePlayer();
+                RotatePlayer(-90);
                 goodToRotate = false;
                 goodToRotateLeft = false;
             }
             if (XRCrossPlatformInputManager.Instance.RightStickAxis.x >= 0.9f && goodToRotateRight)
             {
-
-                RotatePlayer();
-
+                RotatePlayer(90);
                 goodToRotate = false;
                 goodToRotateRight = false;
             }
@@ -237,9 +230,20 @@ namespace XRCrossPlatformInput
         /// </summary>
         /// <param name="player">The transform of the player object</param>
         /// <param name="destination">The transform of the destination for the player</param>
-        private void RotatePlayer()
+        private void RotatePlayer(float rotateValue)
         {
             print("Rotating player");
+            GameObject temp = new GameObject();
+            temp.transform.position = PlayerCollider.transform.position;
+            temp.transform.localEulerAngles = transform.localEulerAngles;
+            Transform oldParent = transform.parent;
+            transform.parent = temp.transform;
+
+
+            temp.transform.localEulerAngles += new Vector3(0, rotateValue, 0); 
+
+            transform.parent = oldParent;
+            Destroy(temp);
         }
 
         private void DoJump()
