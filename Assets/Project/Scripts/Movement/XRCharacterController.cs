@@ -52,8 +52,8 @@ namespace XRCrossPlatformInput
         private bool ignoringRightHand = false;
         // Position
         private Vector3 targetPos;
-        private XRCrossPlatformInput.XRController leftController;
-        private XRCrossPlatformInput.XRController rightController;
+        private XRCrossPlatformInput.Controller leftController;
+        private XRCrossPlatformInput.Controller rightController;
 
         #endregion
 
@@ -61,8 +61,8 @@ namespace XRCrossPlatformInput
 
         private void Start()
         {
-            leftController = XRPositionManager.Instance.LeftHand.GetComponent<XRCrossPlatformInput.XRController>();
-            rightController = XRPositionManager.Instance.RightHand.GetComponent<XRCrossPlatformInput.XRController>();
+            leftController = XRPositionManager.Instance.LeftHand.GetComponent<XRCrossPlatformInput.Controller>();
+            rightController = XRPositionManager.Instance.RightHand.GetComponent<XRCrossPlatformInput.Controller>();
             followTransform = (new GameObject("FollowCamera")).transform;
             followTransform.parent = VrCamera.transform.parent;
             rb = GetComponent<Rigidbody>();

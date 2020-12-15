@@ -27,8 +27,8 @@ namespace XRCrossPlatformInput
         private int controllerLayerMask;
         private Vector3 orginalGrabRotation = Vector3.zero;
 
-        private XRController leftController;
-        private XRController rightController;
+        private Controller leftController;
+        private Controller rightController;
 
 
         private bool rightButtonPressed = false;
@@ -40,8 +40,8 @@ namespace XRCrossPlatformInput
 
         private void Start()
         {
-            leftController = XRPositionManager.Instance.LeftHand.GetComponent<XRCrossPlatformInput.XRController>();
-            rightController = XRPositionManager.Instance.RightHand.GetComponent<XRCrossPlatformInput.XRController>();
+            leftController = XRPositionManager.Instance.LeftHand.GetComponent<XRCrossPlatformInput.Controller>();
+            rightController = XRPositionManager.Instance.RightHand.GetComponent<XRCrossPlatformInput.Controller>();
             mainGrab = GetComponent<InteractableObject>();
 
             controllerLayerMask = mainGrab.ControllerLayer;
@@ -117,7 +117,6 @@ namespace XRCrossPlatformInput
                 ReleaseGrabLeft();
             }
 
-            UpdateControllers();
         }
 
         private void CheckRelease()
@@ -136,10 +135,9 @@ namespace XRCrossPlatformInput
         /// <summary>
         /// Handles updating the controllers on whats going on
         /// </summary>
-        private void UpdateControllers()
+        private void UpdateController(Controller contr, bool updateValue)
         {
-            leftController.IsGrabbing = IsGrabbedLeft;
-            rightController.IsGrabbing = IsGrabbedRight;
+            contr.IsGrabbing = updateValue;
         }
         private void DrawDebugRay()
         {
@@ -168,6 +166,7 @@ namespace XRCrossPlatformInput
                                 print("maybe even this far my guy");
                                 leftController.IsBeingUsed = true;
                                 IsGrabbedLeft = true;
+                                UpdateController(leftController, IsGrabbedLeft);
                                 OnGrab(XRPositionManager.Instance.LeftHand.gameObject);
                             }
                         }
@@ -178,6 +177,7 @@ namespace XRCrossPlatformInput
                             {
                                 rightController.IsBeingUsed = true;
                                 IsGrabbedRight = true;
+                                UpdateController(rightController, IsGrabbedRight);
                                 OnGrab(XRPositionManager.Instance.RightHand.gameObject);
                             }
                         }

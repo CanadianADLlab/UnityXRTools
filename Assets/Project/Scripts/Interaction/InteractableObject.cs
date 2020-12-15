@@ -45,13 +45,13 @@ namespace XRCrossPlatformInput
         private bool rightButtonPressed = false;
         private bool leftButtonPressed = false;
 
-        private XRController rightController;
-        private XRController leftController;
+        private Controller rightController;
+        private Controller leftController;
 
         private void Start()
         {
-            leftController = XRPositionManager.Instance.LeftHand.GetComponent<XRCrossPlatformInput.XRController>();
-            rightController = XRPositionManager.Instance.RightHand.GetComponent<XRCrossPlatformInput.XRController>();
+            leftController = XRPositionManager.Instance.LeftHand.GetComponent<Controller>();
+            rightController = XRPositionManager.Instance.RightHand.GetComponent<Controller>();
             rb = GetComponent<Rigidbody>();
             if (rb == null)
             {
@@ -93,20 +93,17 @@ namespace XRCrossPlatformInput
         private void Update()
         {
             CheckWasGrabbed();
-
             UpdateGrabButton();
             CalculatedAverageVelocity();
-            UpdateControllers();
         }
 
 
         /// <summary>
         /// Handles updating the controllers on whats going on
         /// </summary>
-        private void UpdateControllers()
+        private void UpdateController(Controller contr,bool updateValue)
         {
-            leftController.IsGrabbing = IsGrabbedLeft;
-            rightController.IsGrabbing = IsGrabbedRight;
+            contr.IsGrabbing = updateValue;
         }
         /// <summary>
         /// Calculates the velocity of the last 10 frames
@@ -120,7 +117,6 @@ namespace XRCrossPlatformInput
             // torque
             torque = ((transform.localEulerAngles - previousVelocity)) / Time.deltaTime;
             previousTorque = transform.localEulerAngles;
-
         }
 
         public Vector3 GetVelocity()
@@ -169,6 +165,7 @@ namespace XRCrossPlatformInput
                             {
                                 leftController.IsBeingUsed = true;
                                 IsGrabbedLeft = true;
+                                UpdateController(leftController,IsGrabbedLeft);
                                 AttatchToController(other, XRPositionManager.Instance.LeftHand.gameObject);
                             }
                         }
@@ -179,7 +176,7 @@ namespace XRCrossPlatformInput
                             {
                                 rightController.IsBeingUsed = true;
                                 IsGrabbedRight = true;
-
+                                UpdateController(rightController,IsGrabbedRight);
                                 AttatchToController(other, XRPositionManager.Instance.RightHand.gameObject);
                             }
                         }
@@ -218,7 +215,6 @@ namespace XRCrossPlatformInput
             {
                 WasGrabbed = false;
             }
-
         }
 
         private IEnumerator WaitToGrabLeft(Collider other)
@@ -226,6 +222,7 @@ namespace XRCrossPlatformInput
             yield return new WaitForEndOfFrame();
             leftController.IsBeingUsed = true;
             IsGrabbedLeft = true;
+            UpdateController(leftController, IsGrabbedLeft);
             AttatchToController(other, XRPositionManager.Instance.LeftHand.gameObject);
         }
 
@@ -234,6 +231,7 @@ namespace XRCrossPlatformInput
             yield return new WaitForEndOfFrame();
             rightController.IsBeingUsed = true;
             IsGrabbedRight = true;
+            UpdateController(rightController, IsGrabbedRight);
             AttatchToController(other, XRPositionManager.Instance.RightHand.gameObject);
         }
         /// <summary>
@@ -241,7 +239,6 @@ namespace XRCrossPlatformInput
         /// </summary>
         public void AttatchToController(Collider other, GameObject controller)
         {
-
             rb.useGravity = false;
             rb.isKinematic = true;
             IsGrabbed = true;
@@ -300,7 +297,6 @@ namespace XRCrossPlatformInput
             IsGrabbedRight = false;
             Release();
             ShowController(XRPositionManager.Instance.RightHand.gameObject);
-
         }
         private void ReleaseGrabLeft()
         {
@@ -317,9 +313,9 @@ namespace XRCrossPlatformInput
         {
             if (HideControllerOnGrab)
             {
-                if (controller.GetComponent<XRController>() != null)
+                if (controller.GetComponent<Controller>() != null)
                 {
-                    controller.GetComponent<XRController>().HideController();
+                    controller.GetComponent<Controller>().HideController();
                 }
                 else
                 {
@@ -332,9 +328,9 @@ namespace XRCrossPlatformInput
         {
             if (HideControllerOnGrab)
             {
-                if (controller.GetComponent<XRController>() != null)
+                if (controller.GetComponent<Controller>() != null)
                 {
-                    controller.GetComponent<XRController>().ShowController();
+                    controller.GetComponent<Controller>().ShowController();
                 }
                 else
                 {

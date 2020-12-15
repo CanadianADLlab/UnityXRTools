@@ -16,11 +16,6 @@ namespace XRCrossPlatformInput
 
 
 
-        public XRCrossPlatformInput.XRController GetLeftController()
-        {
-            return LeftHand.GetComponent<XRCrossPlatformInput.XRController>();
-        }
-
 
         #region Singleton
         public static XRPositionManager Instance;

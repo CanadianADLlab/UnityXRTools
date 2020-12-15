@@ -725,9 +725,9 @@ GameObject:
   - component: {fileID: 321834068}
   - component: {fileID: 321834067}
   - component: {fileID: 321834066}
-  - component: {fileID: 321834070}
   - component: {fileID: 321834072}
   - component: {fileID: 321834071}
+  - component: {fileID: 321834070}
   m_Layer: 12
   m_Name: LeftHand Controller
   m_TagString: LeftController
@@ -1153,7 +1153,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 321834064}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 284c724a80e47204584dfb3fec428317, type: 3}
+  m_Script: {fileID: 11500000, guid: c7f74ef6ef6b1ef4689bcb13539185b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   ControllerMesh: {fileID: 0}
@@ -2018,9 +2018,9 @@ GameObject:
   - component: {fileID: 1063976345}
   - component: {fileID: 1063976344}
   - component: {fileID: 1063976343}
-  - component: {fileID: 1063976347}
   - component: {fileID: 1063976349}
   - component: {fileID: 1063976348}
+  - component: {fileID: 1063976347}
   m_Layer: 12
   m_Name: RightHand Controller
   m_TagString: RightController
@@ -2446,7 +2446,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1063976341}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 284c724a80e47204584dfb3fec428317, type: 3}
+  m_Script: {fileID: 11500000, guid: c7f74ef6ef6b1ef4689bcb13539185b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   ControllerMesh: {fileID: 0}
