@@ -708,8 +708,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5531481130ba4e248bdbb7f4b24fe6d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LeftHand: {fileID: 321834064}
-  RightHand: {fileID: 1063976341}
+  LeftHand: {fileID: 321834065}
+  RightHand: {fileID: 1063976342}
   PlaySpace: {fileID: 441878601}
   Camera: {fileID: 697229063}
 --- !u!1 &321834064
