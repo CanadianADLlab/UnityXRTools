@@ -2,6 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+public enum ControllerHand
+{
+    Right,
+    Left
+}
 namespace XRCrossPlatformInput
 {
     /// <summary>
@@ -11,6 +17,7 @@ namespace XRCrossPlatformInput
     {
         [Tooltip("The literal mesh of the controller")]
         public GameObject ControllerMesh;
+        public ControllerHand Hand = ControllerHand.Left;
         public bool IsGrabbing = false;
         public bool IsBeingUsed = false;
 
