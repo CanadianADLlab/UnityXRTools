@@ -148,22 +148,14 @@ namespace XRCrossPlatformInput
         {
             if (other.gameObject.layer == controllerLayerMask)
             {
-                print("Is this being triggered");
                 if (mainGrab.IsGrabbed) // this can only work if a primary grab has been set
                 {
-                    print("How deep");
                     if (mainGrab.HoldToGrab)
                     {
-                        print("are we this deep");
-                        print("left pressed " + leftButtonPressed);
-                        print("tag  " + other.tag);
-                        print("left being used " + leftController.IsBeingUsed);
                         if (leftButtonPressed && other.tag.Equals("LeftController") && !leftController.IsBeingUsed) // Making sure only the left can grab stuff if its the collision
                         {
-                            print("maybe this deep?");
                             if (!IsGrabbedLeft)
                             {
-                                print("maybe even this far my guy");
                                 leftController.IsBeingUsed = true;
                                 IsGrabbedLeft = true;
                                 UpdateController(leftController, IsGrabbedLeft);

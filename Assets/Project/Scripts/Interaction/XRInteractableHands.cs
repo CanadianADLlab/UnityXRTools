@@ -28,18 +28,14 @@ namespace XRCrossPlatformInput
         private InteractableSecondaryGrab secondaryInteractable; // not needed but some things might want to be two handed
 
         private bool leftHandOn = false;
-        private bool rightHandOn = false;  
+        private bool rightHandOn = false;
 
 
         void Start()
         {
             interactable = GetComponent<InteractableObject>();
             secondaryInteractable = GetComponent<InteractableSecondaryGrab>();
-
-            if (IsTwoHands && secondaryInteractable == null)
-            {
-                Debug.LogError("No Secondary grab attatched to an object with secondary grab hands on please attatch or disable on : " + this.transform);
-            }
+            DisableMeshes();
         }
 
         private void DisableMeshes()
@@ -50,6 +46,10 @@ namespace XRCrossPlatformInput
             }
             LeftHandMesh.SetActive(false);
             RightHandMesh.SetActive(false);
+            if (IsTwoHands && secondaryInteractable == null)
+            {
+                Debug.LogError("No Secondary grab attatched to an object with secondary grab hands on please attatch or disable on : " + this.transform);
+            }
             if (IsTwoHands)
             {
                 SecondaryLeftHandMesh.SetActive(false);
@@ -80,21 +80,16 @@ namespace XRCrossPlatformInput
                 }
                 else if (IsTwoHands && interactable.IsGrabbed) // if already being primary held we check to make sure its a two hander before turning on the other hand
                 {
-                    if (xrGamepad.Hand == ControllerHand.Left)
+                    if (xrGamepad.Hand == ControllerHand.Left && !leftHandOn) // Make sure the left hand isn't already holding item
                     {
-                        if (leftHandOn)
-                        {
-                            ToggleHand(SecondaryLeftHandMesh, true);
-                            xrGamepad.HideController();
-                        }
+                        ToggleHand(SecondaryLeftHandMesh, true);
+                        xrGamepad.HideController();
                     }
-                    else if (xrGamepad.Hand == ControllerHand.Right)
+                    else if (xrGamepad.Hand == ControllerHand.Right && !rightHandOn)
                     {
-                        if (rightHandOn)
-                        {
-                            ToggleHand(SecondaryRightHandMesh, true);
-                            xrGamepad.HideController();
-                        }
+
+                        ToggleHand(SecondaryRightHandMesh, true);
+                        xrGamepad.HideController();
                     }
                 }
             }
@@ -103,7 +98,6 @@ namespace XRCrossPlatformInput
 
         private void OnTriggerExit(Collider other)
         {
-            print("Exit");
             if (other.gameObject.layer == interactable.ControllerLayer)
             {
                 Controller xrGamepad = other.GetComponent<Controller>();
@@ -126,21 +120,17 @@ namespace XRCrossPlatformInput
                 {
                     if (!secondaryInteractable.IsGrabbed)
                     {
-                        if (xrGamepad.Hand == ControllerHand.Left)
+                        if (xrGamepad.Hand == ControllerHand.Left && !leftHandOn)
                         {
-                            if (leftHandOn)
-                            {
-                                ToggleHand(SecondaryLeftHandMesh, false);
-                                xrGamepad.ShowController();
-                            }
+
+                            ToggleHand(SecondaryLeftHandMesh, false);
+                            xrGamepad.ShowController();
                         }
-                        else if (xrGamepad.Hand == ControllerHand.Right)
+                        else if (xrGamepad.Hand == ControllerHand.Right && !rightHandOn)
                         {
-                            if (rightHandOn)
-                            {
-                                ToggleHand(SecondaryRightHandMesh, false);
-                                xrGamepad.ShowController();
-                            }
+
+                            ToggleHand(SecondaryRightHandMesh, false);
+                            xrGamepad.ShowController();
                         }
                     }
                 }

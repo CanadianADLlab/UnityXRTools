@@ -57,8 +57,6 @@ namespace XRCrossPlatformInput
 
         #endregion
 
-
-
         private void Start()
         {
             leftController = XRPositionManager.Instance.LeftHand.GetComponent<XRCrossPlatformInput.Controller>();
@@ -96,7 +94,6 @@ namespace XRCrossPlatformInput
                 ignoringLeftHand = false;
                 IgnoreChildrenColliders(leftController.transform, ignoringLeftHand); // Passing false re enables zee collider
             }
-            print("Right is grabbing  " + rightController.transform.name  +" : "  + rightController.IsGrabbing);
             if (rightController.IsGrabbing && !ignoringRightHand)
             {
                 IgnoreChildrenColliders(rightController.transform);
