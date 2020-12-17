@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace XRCrossPlatformInput
+namespace EpicXRCrossPlatformInput
 {
     /// <summary>
     /// Handles the logic of objects being grabbed

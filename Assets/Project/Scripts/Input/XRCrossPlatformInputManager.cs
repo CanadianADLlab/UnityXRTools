@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace XRCrossPlatformInput
+namespace EpicXRCrossPlatformInput
 {
     /// <summary>
     /// Handles getting the xr input

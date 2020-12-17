@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace XRCrossPlatformInput
+namespace EpicXRCrossPlatformInput
 {
     /// <summary>
     /// Handles the movement of rotation 
@@ -40,8 +40,8 @@ namespace XRCrossPlatformInput
 
         private void Start()
         {
-            leftController = XRPositionManager.Instance.LeftHand.GetComponent<XRCrossPlatformInput.Controller>();
-            rightController = XRPositionManager.Instance.RightHand.GetComponent<XRCrossPlatformInput.Controller>();
+            leftController = XRPositionManager.Instance.LeftHand.GetComponent<EpicXRCrossPlatformInput.Controller>();
+            rightController = XRPositionManager.Instance.RightHand.GetComponent<EpicXRCrossPlatformInput.Controller>();
             mainGrab = GetComponent<InteractableObject>();
 
             controllerLayerMask = mainGrab.ControllerLayer;

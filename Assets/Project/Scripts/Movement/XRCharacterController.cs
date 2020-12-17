@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace XRCrossPlatformInput
+namespace EpicXRCrossPlatformInput
 {
 
     public class XRCharacterController : MonoBehaviour
@@ -52,15 +52,15 @@ namespace XRCrossPlatformInput
         private bool ignoringRightHand = false;
         // Position
         private Vector3 targetPos;
-        private XRCrossPlatformInput.Controller leftController;
-        private XRCrossPlatformInput.Controller rightController;
+        private EpicXRCrossPlatformInput.Controller leftController;
+        private EpicXRCrossPlatformInput.Controller rightController;
 
         #endregion
 
         private void Start()
         {
-            leftController = XRPositionManager.Instance.LeftHand.GetComponent<XRCrossPlatformInput.Controller>();
-            rightController = XRPositionManager.Instance.RightHand.GetComponent<XRCrossPlatformInput.Controller>();
+            leftController = XRPositionManager.Instance.LeftHand.GetComponent<EpicXRCrossPlatformInput.Controller>();
+            rightController = XRPositionManager.Instance.RightHand.GetComponent<EpicXRCrossPlatformInput.Controller>();
             followTransform = (new GameObject("FollowCamera")).transform;
             followTransform.parent = VrCamera.transform.parent;
             rb = GetComponent<Rigidbody>();

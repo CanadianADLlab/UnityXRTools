@@ -8,7 +8,7 @@ public enum ControllerHand
     Right,
     Left
 }
-namespace XRCrossPlatformInput
+namespace EpicXRCrossPlatformInput
 {
     /// <summary>
     /// Handles functions to do directly with the controllers

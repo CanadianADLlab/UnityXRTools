@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
-using XRCrossPlatformInput;
+using EpicXRCrossPlatformInput;
 
-namespace XRCrossPlatformInput
+namespace EpicXRCrossPlatformInput
 {
     /// <summary>
     /// Attactch with interactable objects to hide handss
