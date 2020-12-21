@@ -51,7 +51,7 @@ namespace EpicXRCrossPlatformInput
 
         private void CheckIfGrabbed()
         {
-            if(objectToBeGrabbed != null && objectToBeGrabbed.IsGrabbed)
+            if(objectToBeGrabbed != null && objectToBeGrabbed.IsGrabbed) // Basically if we are grabbing I don't even want to let users do things
             {
                 ToggleHandIcon(false);
             }
@@ -77,6 +77,7 @@ namespace EpicXRCrossPlatformInput
                     {
                         objectToBeGrabbed = hit.collider.transform.GetComponentInParent<InteractableObject>();
                     }
+                 
 
                     if (objectToBeGrabbed != null && objectToBeGrabbed.SnapToController ) // we hit a grabable boy and we need to make sure it has snap mode 
                     {
@@ -87,7 +88,7 @@ namespace EpicXRCrossPlatformInput
                         {
                             ToggleHandIcon(false);
                         }
-                        handSprite.transform.position = hit.transform.position;
+                        handSprite.transform.position = objectToBeGrabbed.transform.position;
                     }
                     else
                     {
