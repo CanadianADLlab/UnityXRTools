@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -24,7 +25,7 @@ namespace EpicXRCrossPlatformInput
         private Controller xrGamePad;
 
         private GameObject handSprite;
-
+        private InteractableObject objectToBeGrabbed;
 
         private void Start()
         {
@@ -45,7 +46,17 @@ namespace EpicXRCrossPlatformInput
         {
             CastRayFromController();
             DrawDebugRay();
+            CheckIfGrabbed();
         }
+
+        private void CheckIfGrabbed()
+        {
+            if(objectToBeGrabbed != null && objectToBeGrabbed.IsGrabbed)
+            {
+                ToggleHandIcon(false);
+            }
+        }
+
         private void CastRayFromController()
         {
             if(!xrGamePad.IsGrabbing)
@@ -53,10 +64,9 @@ namespace EpicXRCrossPlatformInput
                 RaycastHit hit;
                 if(Physics.SphereCast(transform.position,SphereCastRadius,transform.TransformDirection(SphereCastDirection),out hit,GrabDistance,GrabLayer))
                 {
-                    print("we hit something before the if statement : " + hit.transform.name);
-                    InteractableObject objectToBeGrabbed = null;
+                    raycastingTarget = true;
                     // could be the object, could be a parent, could be a child who knows lets be certain though
-                    if(hit.collider.transform.GetComponent<InteractableObject>() != null)
+                    if (hit.collider.transform.GetComponent<InteractableObject>() != null)
                     {
                         objectToBeGrabbed = hit.collider.transform.GetComponent<InteractableObject>();
                     }
@@ -69,11 +79,21 @@ namespace EpicXRCrossPlatformInput
                         objectToBeGrabbed = hit.collider.transform.GetComponentInParent<InteractableObject>();
                     }
 
-                    if (objectToBeGrabbed != null) // we hit a grabable boy
+                    if (objectToBeGrabbed != null && objectToBeGrabbed.SnapToController ) // we hit a grabable boy and we need to make sure it has snap mode 
                     {
-                        print("We hit something that has interactable : " + hit.transform.name);
                         ToggleHandIcon(true);
+                        objectToBeGrabbed.CheckGrab(GetComponent<Collider>()); // This function handles grabbing, uses the controller collider to attatch
+                      
+                        if (!objectToBeGrabbed.HoldToGrab && objectToBeGrabbed.IsGrabbed) // if in the above function the user grabs the thing we need to turn off the icon
+                        {
+                            print("Sending grab request " + objectToBeGrabbed.transform.name);
+                            ToggleHandIcon(false);
+                        }
                         handSprite.transform.position = hit.transform.position;
+                    }
+                    else
+                    {
+                        ToggleHandIcon(false);
                     }
                 }
                 else
@@ -82,6 +102,8 @@ namespace EpicXRCrossPlatformInput
                 }
             }
         }
+
+       
         private void ToggleHandIcon(bool onOff)
         {
             if (handSprite != null)

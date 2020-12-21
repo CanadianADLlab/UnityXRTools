@@ -30,6 +30,8 @@ namespace EpicXRCrossPlatformInput
         public bool IsGrabbed = false; // Used to make sure we cant grab it out of our hand
         [HideInInspector]
         public bool WasGrabbed = false; // True if held last frame
+        [HideInInspector]
+        public bool WaitingToGrab = false; // True if held last frame
 
         private Transform oldParent;
 
@@ -153,6 +155,11 @@ namespace EpicXRCrossPlatformInput
         }
         private void OnTriggerStay(Collider other)
         {
+            CheckGrab(other);
+        }
+
+        public void CheckGrab(Collider other) // this is the ontrigger function moved so it can be called from other scripts
+        {
             if (other.gameObject.layer == ControllerLayer)
             {
                 if (!IsGrabbed)
@@ -165,7 +172,7 @@ namespace EpicXRCrossPlatformInput
                             {
                                 leftController.IsBeingUsed = true;
                                 IsGrabbedLeft = true;
-                                UpdateController(leftController,IsGrabbedLeft);
+                                UpdateController(leftController, IsGrabbedLeft);
                                 AttatchToController(other, XRPositionManager.Instance.LeftHand.gameObject);
                             }
                         }
@@ -176,7 +183,7 @@ namespace EpicXRCrossPlatformInput
                             {
                                 rightController.IsBeingUsed = true;
                                 IsGrabbedRight = true;
-                                UpdateController(rightController,IsGrabbedRight);
+                                UpdateController(rightController, IsGrabbedRight);
                                 AttatchToController(other, XRPositionManager.Instance.RightHand.gameObject);
                             }
                         }
@@ -187,6 +194,7 @@ namespace EpicXRCrossPlatformInput
                         {
                             if (!IsGrabbedLeft)
                             {
+                                WaitingToGrab = true;
                                 StartCoroutine(WaitToGrabLeft(other)); // waits till end of frame to set value to true
                             }
                         }
@@ -195,6 +203,7 @@ namespace EpicXRCrossPlatformInput
                         {
                             if (!IsGrabbedRight)
                             {
+                                WaitingToGrab = true;
                                 StartCoroutine(WaitToGrabRight(other));
                             }
                         }
@@ -204,7 +213,6 @@ namespace EpicXRCrossPlatformInput
                 CheckReleaseGrab(); // Might need to be changed if we don't have collision grabbing (Although when would that ever happen)
             }
         }
-
 
         /// <summary>
         /// Used to check if object was being grabbed last frame
@@ -224,6 +232,7 @@ namespace EpicXRCrossPlatformInput
             IsGrabbedLeft = true;
             UpdateController(leftController, IsGrabbedLeft);
             AttatchToController(other, XRPositionManager.Instance.LeftHand.gameObject);
+            WaitingToGrab = false;
         }
 
         private IEnumerator WaitToGrabRight(Collider other)
@@ -233,6 +242,7 @@ namespace EpicXRCrossPlatformInput
             IsGrabbedRight = true;
             UpdateController(rightController, IsGrabbedRight);
             AttatchToController(other, XRPositionManager.Instance.RightHand.gameObject);
+            WaitingToGrab = false;
         }
         /// <summary>
         /// Sets all the values of the object when we attatch to the controller
@@ -250,7 +260,6 @@ namespace EpicXRCrossPlatformInput
                 isOldParentSet = true;
             }
             transform.parent = other.transform;
-
             if (SnapToController) // This should be changed for the 1 handed weapons deffinitly a bad way of doing this
             {
                 transform.localPosition = Vector3.zero;
@@ -263,6 +272,7 @@ namespace EpicXRCrossPlatformInput
                 transform.localEulerAngles = new Vector3(270.0f, 180.0f, 0.0f);
             }
 
+       
             // Controller is only hidden if controller hidden bool is true
             HideController(controller);
         }
@@ -338,7 +348,6 @@ namespace EpicXRCrossPlatformInput
                 }
             }
         }
-
 
 
         /// <summary>

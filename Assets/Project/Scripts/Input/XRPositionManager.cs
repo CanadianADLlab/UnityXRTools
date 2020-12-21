@@ -14,9 +14,6 @@ namespace EpicXRCrossPlatformInput
         public GameObject PlaySpace;
         public GameObject Camera;
 
-
-
-
         #region Singleton
         public static XRPositionManager Instance;
         private void Awake()
