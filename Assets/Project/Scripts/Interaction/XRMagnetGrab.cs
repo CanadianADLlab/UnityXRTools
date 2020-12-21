@@ -64,7 +64,6 @@ namespace EpicXRCrossPlatformInput
                 RaycastHit hit;
                 if(Physics.SphereCast(transform.position,SphereCastRadius,transform.TransformDirection(SphereCastDirection),out hit,GrabDistance,GrabLayer))
                 {
-                    raycastingTarget = true;
                     // could be the object, could be a parent, could be a child who knows lets be certain though
                     if (hit.collider.transform.GetComponent<InteractableObject>() != null)
                     {
@@ -86,7 +85,6 @@ namespace EpicXRCrossPlatformInput
                       
                         if (!objectToBeGrabbed.HoldToGrab && objectToBeGrabbed.IsGrabbed) // if in the above function the user grabs the thing we need to turn off the icon
                         {
-                            print("Sending grab request " + objectToBeGrabbed.transform.name);
                             ToggleHandIcon(false);
                         }
                         handSprite.transform.position = hit.transform.position;
