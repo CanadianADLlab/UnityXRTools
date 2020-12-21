@@ -68,7 +68,8 @@ namespace EpicXRCrossPlatformInput
 
         private void FixedUpdate()
         {
-            DoJump();
+           
+            Fall();
             Move();
         }
 
@@ -128,6 +129,7 @@ namespace EpicXRCrossPlatformInput
                 {
                     print("Time to jump");
                     hasJumped = true;
+                    DoJump();
                 }
             }
         }
@@ -249,14 +251,17 @@ namespace EpicXRCrossPlatformInput
             {
                 rb.velocity = new Vector3(rb.velocity.x, JumpHeight, rb.velocity.z);
             }
-            else if (!grounded)
-            {
+        }
+
+        private void Fall()
+        {
+            if(!grounded)
+                {
                 if (rb.velocity.y < 0 && rb.velocity.y > -15)
                 {
                     rb.velocity += new Vector3(0.0f, -FallMultiplier, 0.0f);
                 }
             }
-
         }
 
     }
