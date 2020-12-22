@@ -305,6 +305,107 @@ namespace EpicXRCrossPlatformInput
             }
         }
 
+        public bool GetInputByButton(ButtonTypes inputButton, ControllerHand hand, bool hold)
+        {
+            if (hold)
+            {
+                if (inputButton == ButtonTypes.Grip)
+                {
+                    if (hand == ControllerHand.Left)
+                    {
+                        return XRCrossPlatformInputManager.Instance.LeftGripPressed;
+                    }
+                    else
+                    {
+                        return XRCrossPlatformInputManager.Instance.RightGripPressed;
+                    }
+                }
+                else if (inputButton == ButtonTypes.Trigger)
+                {
+                    if (hand == ControllerHand.Left)
+                    {
+                        return XRCrossPlatformInputManager.Instance.LeftTriggerPressed;
+                    }
+                    else
+                    {
+                        return XRCrossPlatformInputManager.Instance.RightTriggerPressed;
+                    }
+                }
+                else if (inputButton == ButtonTypes.Primary)
+                {
+                    if (hand == ControllerHand.Left)
+                    {
+                        return XRCrossPlatformInputManager.Instance.LeftPrimaryButtonPressed;
+                    }
+                    else
+                    {
+                        return XRCrossPlatformInputManager.Instance.RightPrimaryButtonPressed;
+                    }
+                }
+                else if (inputButton == ButtonTypes.Secondary)
+                {
+                    if (hand == ControllerHand.Left)
+                    {
+                        return XRCrossPlatformInputManager.Instance.LeftSecondaryButtonPressed;
+                    }
+                    else
+                    {
+                        return XRCrossPlatformInputManager.Instance.RightSecondaryButtonPressed;
+                    }
+                }
+            }
+            else
+            {
+                if (inputButton == ButtonTypes.Grip)
+                {
+                    if (hand == ControllerHand.Left)
+                    {
+                        return XRCrossPlatformInputManager.Instance.LeftGripDown;
+                    }
+                    else
+                    {
+                        return XRCrossPlatformInputManager.Instance.RightGripDown;
+                    }
+                }
+                else if (inputButton == ButtonTypes.Trigger)
+                {
+                    if (hand == ControllerHand.Left)
+                    {
+                        return XRCrossPlatformInputManager.Instance.LeftTriggerDown;
+                    }
+                    else
+                    {
+                        return XRCrossPlatformInputManager.Instance.RightTriggerDown;
+                    }
+                }
+                else if (inputButton == ButtonTypes.Primary)
+                {
+                    if (hand == ControllerHand.Left)
+                    {
+                        return XRCrossPlatformInputManager.Instance.LeftPrimaryButtonDown;
+                    }
+                    else
+                    {
+                        return XRCrossPlatformInputManager.Instance.RightPrimaryButtonDown;
+                    }
+                }
+                else if (inputButton == ButtonTypes.Secondary)
+                {
+                    if (hand == ControllerHand.Left)
+                    {
+                        return XRCrossPlatformInputManager.Instance.LeftSecondaryButtonDown;
+                    }
+                    else
+                    {
+                        return XRCrossPlatformInputManager.Instance.RightSecondaryButtonDown;
+                    }
+                }
+            }
+
+
+            return false;
+        }
+
         #region singleton
 
         public static XRCrossPlatformInputManager Instance;

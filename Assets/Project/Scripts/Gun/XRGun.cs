@@ -12,9 +12,12 @@ namespace EpicXRCrossPlatformInput
     [RequireComponent(typeof(InteractableObject))]
     public class XRGun : MonoBehaviour
     {
-        public ButtonTypes ShootButton = ButtonTypes.Trigger;
 
-        public bool SingleFire = true;
+        public ButtonTypes ShootButton = ButtonTypes.Trigger;
+        public bool Automatic = true;
+
+        public float Clipsize = 12;
+
 
 
         private InteractableObject interactableObject;
@@ -27,35 +30,16 @@ namespace EpicXRCrossPlatformInput
             interactableObject = GetComponent<InteractableObject>();
         }
 
+        private void Update()
+        {
+            UpdateGrabButton();
+        }
         private void UpdateGrabButton()
         {
-            if (!SingleFire)
-            {
-                if (ShootButton == ButtonTypes.Grip)
-                {
-                    leftShoot = XRCrossPlatformInputManager.Instance.LeftGripPressed;
-                    rightShoot = XRCrossPlatformInputManager.Instance.RightGripPressed;
-                }
-                else if (ShootButton == ButtonTypes.Trigger)
-                {
-                    leftShoot = XRCrossPlatformInputManager.Instance.LeftTriggerPressed;
-                    rightShoot = XRCrossPlatformInputManager.Instance.RightTriggerPressed;
-                }
-            }
-            else
-            {
-                if (ShootButton == ButtonTypes.Grip)
-                {
-                    leftShoot = XRCrossPlatformInputManager.Instance.LeftGripDown;
-                    rightShoot = XRCrossPlatformInputManager.Instance.RightGripDown;
-                }
-                else if (ShootButton == ButtonTypes.Trigger)
-                {
-                    leftShoot = XRCrossPlatformInputManager.Instance.LeftTriggerDown;
-                    rightShoot = XRCrossPlatformInputManager.Instance.RightTriggerDown;
-                }
-            }
-
+            leftShoot = XRCrossPlatformInputManager.Instance.GetInputByButton(ShootButton, ControllerHand.Left, Automatic);
+            rightShoot = XRCrossPlatformInputManager.Instance.GetInputByButton(ShootButton, ControllerHand.Right, Automatic);
+            print("Left shoot is " + leftShoot);
+            print("Left shoot is " + rightShoot);
         }
     }
 
