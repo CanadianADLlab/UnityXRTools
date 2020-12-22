@@ -36,8 +36,6 @@ namespace EpicXRCrossPlatformInput
 
 
 
-
-
         private void Start()
         {
             leftController = XRPositionManager.Instance.LeftHand.GetComponent<EpicXRCrossPlatformInput.Controller>();
@@ -50,33 +48,8 @@ namespace EpicXRCrossPlatformInput
 
         private void UpdateGrabButton()
         {
-            if (mainGrab.HoldToGrab)
-            {
-                if (mainGrab.GrabButton == ButtonTypes.Grip)
-                {
-                    leftButtonPressed = XRCrossPlatformInputManager.Instance.LeftGripPressed;
-                    rightButtonPressed = XRCrossPlatformInputManager.Instance.RightGripPressed;
-                }
-                else if (mainGrab.GrabButton == ButtonTypes.Trigger)
-                {
-                    leftButtonPressed = XRCrossPlatformInputManager.Instance.LeftTriggerPressed;
-                    rightButtonPressed = XRCrossPlatformInputManager.Instance.RightTriggerPressed;
-                }
-            }
-            else
-            {
-                if (mainGrab.GrabButton == ButtonTypes.Grip)
-                {
-                    leftButtonPressed = XRCrossPlatformInputManager.Instance.LeftGripDown;
-                    rightButtonPressed = XRCrossPlatformInputManager.Instance.RightGripDown;
-                }
-                else if (mainGrab.GrabButton == ButtonTypes.Trigger)
-                {
-                    leftButtonPressed = XRCrossPlatformInputManager.Instance.LeftTriggerDown;
-                    rightButtonPressed = XRCrossPlatformInputManager.Instance.RightTriggerDown;
-                }
-            }
-
+            leftButtonPressed = XRCrossPlatformInputManager.Instance.GetInputByButton(mainGrab.GrabButton, ControllerHand.Left, true); // I'm just always gonna make people hold to grab for the secondary it seems to confusing otherwise but idk follow your heart and do whatever my dude
+            rightButtonPressed = XRCrossPlatformInputManager.Instance.GetInputByButton(mainGrab.GrabButton, ControllerHand.Right, true);
         }
 
         private void Update()

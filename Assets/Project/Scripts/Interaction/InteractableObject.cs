@@ -70,33 +70,8 @@ namespace EpicXRCrossPlatformInput
 
         private void UpdateGrabButton()
         {
-            if (HoldToGrab)
-            {
-                if (GrabButton == ButtonTypes.Grip)
-                {
-                    leftButtonPressed = XRCrossPlatformInputManager.Instance.LeftGripPressed;
-                    rightButtonPressed = XRCrossPlatformInputManager.Instance.RightGripPressed;
-                }
-                else if (GrabButton == ButtonTypes.Trigger)
-                {
-                    leftButtonPressed = XRCrossPlatformInputManager.Instance.LeftTriggerPressed;
-                    rightButtonPressed = XRCrossPlatformInputManager.Instance.RightTriggerPressed;
-                }
-            }
-            else
-            {
-                if (GrabButton == ButtonTypes.Grip)
-                {
-                    leftButtonPressed = XRCrossPlatformInputManager.Instance.LeftGripDown;
-                    rightButtonPressed = XRCrossPlatformInputManager.Instance.RightGripDown;
-                }
-                else if (GrabButton == ButtonTypes.Trigger)
-                {
-                    leftButtonPressed = XRCrossPlatformInputManager.Instance.LeftTriggerDown;
-                    rightButtonPressed = XRCrossPlatformInputManager.Instance.RightTriggerDown;
-                }
-            }
-
+            leftButtonPressed = XRCrossPlatformInputManager.Instance.GetInputByButton(GrabButton,ControllerHand.Left,HoldToGrab);
+            rightButtonPressed = XRCrossPlatformInputManager.Instance.GetInputByButton(GrabButton, ControllerHand.Right, HoldToGrab);
         }
 
         private void Update()
