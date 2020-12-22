@@ -19,6 +19,8 @@ namespace EpicXRCrossPlatformInput
 
 
         [Header("Clip and Shooting Settings")]
+        public bool InfiniteAmmo = false;
+        [DrawIf("InfiniteAmmo", false)]
         public float Clipsize = 12;
         public float FireRate = 30; // Shots per second if set to auto 
         public bool Automatic = true;
@@ -36,7 +38,8 @@ namespace EpicXRCrossPlatformInput
 
         [Header("Effect Settings")]
         public AudioClip GunSound;
-        
+        public AudioClip EmptyClipSound;
+
 
 
 
@@ -44,12 +47,14 @@ namespace EpicXRCrossPlatformInput
         private bool leftShoot = false;
         private bool rightShoot = false;
         private AudioSource gunAudioSource;
-
+        private bool shootRoutineRunning = false;
+        private bool shooting = false;
+        private float fireRate = 0;
 
         private void Start()
         {
             interactableObject = GetComponent<InteractableObject>();
-
+            fireRate = 1 / FireRate; // Shots per second 
             InitAudio();
             CheckForInputConflicts();
         }
@@ -63,28 +68,40 @@ namespace EpicXRCrossPlatformInput
 
         private void CheckShoot()
         {
-            if(interactableObject.IsGrabbedLeft && leftShoot)
+            if (!shootRoutineRunning) // dont shoot if already shooting :)
             {
-                if(ProjectileBullet)
+
+                if (interactableObject.IsGrabbedLeft && leftShoot)
                 {
-                    ShootProjectile();
+                    shooting = true;
+                    if (ProjectileBullet)
+                    {
+                        StartCoroutine(ShootProjectile());
+                    }
+                    else
+                    {
+                        StartCoroutine(ShootHitscan());
+                    }
+                }
+                else if (interactableObject.IsGrabbedRight && rightShoot)
+                {
+                    shooting = true;
+
+                    if (ProjectileBullet)
+                    {
+                        StartCoroutine(ShootProjectile());
+                    }
+                    else
+                    {
+                        StartCoroutine(ShootHitscan());
+                    }
                 }
                 else
                 {
-                    ShootHitscan();
+                    shooting = false;
                 }
             }
-            else if (interactableObject.IsGrabbedRight && rightShoot)
-            {
-                if (ProjectileBullet)
-                {
-                    ShootProjectile();
-                }
-                else
-                {
-                    ShootHitscan();
-                }
-            }
+
         }
 
         private void InitAudio()
@@ -100,22 +117,33 @@ namespace EpicXRCrossPlatformInput
             gunAudioSource.clip = GunSound;
         }
 
-        private void ShootHitscan()
+        private IEnumerator ShootHitscan()
         {
-            PlayFX();
-            PlaySound();
-            RaycastHit hit;
-            if(Physics.Raycast(ShootPosition.transform.position,ShootPosition.transform.forward,out hit,ShootDistance, ShootRaycastLayers))
+            shootRoutineRunning = true;
+
+            while (shooting)
             {
-                print("We hit the target boss man " + hit.transform.name);
+                PlayFX();
+                PlaySound();
+                RaycastHit hit;
+                if (Physics.Raycast(ShootPosition.transform.position, ShootPosition.transform.forward, out hit, ShootDistance, ShootRaycastLayers))
+                {
+                    print("We hit the target boss man " + hit.transform.name);
+                }
+                yield return new WaitForSeconds(fireRate);
             }
+            yield return null;
+            shootRoutineRunning = false;
         }
 
-        private void ShootProjectile()
+        private IEnumerator ShootProjectile()
         {
+            shootRoutineRunning = true;
 
             PlayFX();
             PlaySound();
+            yield return null;
+            shootRoutineRunning = false;
         }
 
         private void PlayFX()
@@ -133,7 +161,7 @@ namespace EpicXRCrossPlatformInput
         /// </summary>
         private void CheckForInputConflicts()
         {
-            if(interactableObject.GrabButton == ShootButton)
+            if (interactableObject.GrabButton == ShootButton)
             {
                 Debug.LogError("The Interact Grab script attatch to " + this.transform.name + " has the same input as the XRGun script on the same object");
             }
