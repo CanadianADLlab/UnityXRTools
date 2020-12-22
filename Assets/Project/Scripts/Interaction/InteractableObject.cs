@@ -14,12 +14,19 @@ namespace EpicXRCrossPlatformInput
     {
         [Header("Grab Settings")]
         public int ControllerLayer = 12;
-        public bool SnapToController = true;
-        public bool SnapTonController2Hand = false;
+   
         public bool HideControllerOnGrab = false;
         public bool HoldToGrab = true;
 
         public ButtonTypes GrabButton = ButtonTypes.Grip;
+
+        [Header("Controller Snap Settings")]
+        public bool SnapToController = true;
+        public bool SnapTonController2Hand = false;
+
+        [Header("Throw Settings")]
+        public float ThrowVelocityMultiplier = 1; // Multiplies the vel of a throw 
+        public float ThrowTorqueMultiplier = 1; // Multiplies the torque of a throw (Torque is rotation.... I didn't know what that ment like a year ago so you know in case I forget again)
 
         // Hiden bool values
         [HideInInspector]
@@ -295,8 +302,8 @@ namespace EpicXRCrossPlatformInput
 
             if (transform.GetComponent<Rigidbody>())
             {
-                transform.GetComponent<Rigidbody>().velocity = velocity; // Adding velocity 
-                transform.GetComponent<Rigidbody>().AddTorque(torque); // Adding velocity 
+                transform.GetComponent<Rigidbody>().velocity = velocity * ThrowVelocityMultiplier; // Adding velocity 
+                transform.GetComponent<Rigidbody>().AddTorque((torque * ThrowTorqueMultiplier)); // Adding velocity 
             }
             isOldParentSet = false; // When we are done we don't need to know what the old parent is
         }

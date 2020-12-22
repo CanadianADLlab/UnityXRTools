@@ -68,7 +68,6 @@ namespace EpicXRCrossPlatformInput
 
         private void FixedUpdate()
         {
-           
             Fall();
             Move();
         }
@@ -127,7 +126,6 @@ namespace EpicXRCrossPlatformInput
                 // Jump
                 if (XRCrossPlatformInputManager.Instance.RightPrimaryButtonDown && !hasJumped)
                 {
-                    print("Time to jump");
                     hasJumped = true;
                     DoJump();
                 }
