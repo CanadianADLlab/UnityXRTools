@@ -18,9 +18,9 @@ namespace EpicXRCrossPlatformInput
 
         public bool IsTwoHands = false;
 
-        [DrawIf("isTwoHands", true)]  // the user doesn't need to see these if no hands
+        [DrawIf("IsTwoHands", true)]  // the user doesn't need to see these if no hands
         public GameObject SecondaryLeftHandMesh;
-        [DrawIf("isTwoHands", true)]
+        [DrawIf("IsTwoHands", true)]
         public GameObject SecondaryRightHandMesh;
 
 
@@ -30,6 +30,8 @@ namespace EpicXRCrossPlatformInput
         private bool leftHandOn = false;
         private bool rightHandOn = false;
         private bool firstHandOn = false;
+        private Controller secondaryGrabbingController;
+        private GameObject secondaryMesh;
 
 
         void Start()
@@ -85,12 +87,15 @@ namespace EpicXRCrossPlatformInput
                 {
                     if (xrGamepad.Hand == ControllerHand.Left && !leftHandOn) // Make sure the left hand isn't already holding item
                     {
+                        secondaryGrabbingController = null;
+                        secondaryMesh = null;
                         ToggleHand(SecondaryLeftHandMesh, true);
                         xrGamepad.HideController();
                     }
                     else if (xrGamepad.Hand == ControllerHand.Right && !rightHandOn)
                     {
-
+                        secondaryGrabbingController = null;
+                        secondaryMesh = null;
                         ToggleHand(SecondaryRightHandMesh, true);
                         xrGamepad.HideController();
                     }
@@ -98,6 +103,10 @@ namespace EpicXRCrossPlatformInput
             }
         }
 
+        public void Update()
+        {
+            ShowSecondHand();
+        }
 
         private void OnTriggerExit(Collider other)
         {
@@ -123,17 +132,18 @@ namespace EpicXRCrossPlatformInput
                 }
                 else if (IsTwoHands) // if already being primary held we check to make sure its a two hander before turning on the other hand
                 {
+                    secondaryGrabbingController = xrGamepad; // this is for a weird edge case if the users hand leaves the trigger while still grabbing
                     if (!secondaryInteractable.IsGrabbed)
                     {
                         if (xrGamepad.Hand == ControllerHand.Left && !leftHandOn)
                         {
-
+                            secondaryGrabbingController = null;
                             ToggleHand(SecondaryLeftHandMesh, false);
                             xrGamepad.ShowController();
                         }
                         else if (xrGamepad.Hand == ControllerHand.Right && !rightHandOn)
                         {
-
+                            secondaryGrabbingController = null;
                             ToggleHand(SecondaryRightHandMesh, false);
                             xrGamepad.ShowController();
                         }
@@ -142,6 +152,32 @@ namespace EpicXRCrossPlatformInput
             }
         }
 
+
+
+        /// <summary>
+        /// This function is for an edge case where the user pulls their hand out of the trigger while still grabbing
+        /// </summary>
+        private void ShowSecondHand()
+        {
+            if(IsTwoHands && !secondaryInteractable.IsGrabbed)
+            {
+                if(secondaryGrabbingController != null)
+                {
+                    if (secondaryGrabbingController.Hand == ControllerHand.Left && !leftHandOn)
+                    {
+                        ToggleHand(SecondaryLeftHandMesh, false);
+                        secondaryGrabbingController.ShowController();
+                        secondaryGrabbingController = null;
+                    }
+                    else if (secondaryGrabbingController.Hand == ControllerHand.Right && !rightHandOn)
+                    {
+                        ToggleHand(SecondaryRightHandMesh, false);
+                        secondaryGrabbingController.ShowController();
+                        secondaryGrabbingController = null;
+                    }
+                }
+            }
+        }
         private void ToggleHand(GameObject hand, bool onOff)
         {
             hand.SetActive(onOff);
