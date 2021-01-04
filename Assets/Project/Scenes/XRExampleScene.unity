@@ -2111,14 +2111,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 441878601}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -1, z: -0, w: 0.0000029504295}
+  m_LocalPosition: {x: 0, y: 0, z: -2.986}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1801035567}
   m_Father: {fileID: 0}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -180, z: 0}
 --- !u!1 &442178533
 GameObject:
   m_ObjectHideFlags: 0
@@ -7464,14 +7464,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShootButton: 3
+  InfiniteAmmo: 0
   Clipsize: 12
+  FireRate: 30
   Automatic: 1
   ShootPosition: {fileID: 1701467255}
   ProjectileBullet: 0
   BulletSpeed: 100
   ShootRaycastLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 4294967295
+  ShootDistance: 50
+  GunSound: {fileID: 0}
+  EmptyClipSound: {fileID: 0}
 --- !u!1001 &2008286447
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -68,38 +68,34 @@ namespace EpicXRCrossPlatformInput
 
         private void CheckShoot()
         {
-            if (!shootRoutineRunning) // dont shoot if already shooting :)
+            if (interactableObject.IsGrabbedLeft && leftShoot && !shootRoutineRunning) // dont shoot if already shooting :)
             {
-
-                if (interactableObject.IsGrabbedLeft && leftShoot)
+                shooting = true;
+                if (ProjectileBullet)
                 {
-                    shooting = true;
-                    if (ProjectileBullet)
-                    {
-                        StartCoroutine(ShootProjectile());
-                    }
-                    else
-                    {
-                        StartCoroutine(ShootHitscan());
-                    }
-                }
-                else if (interactableObject.IsGrabbedRight && rightShoot)
-                {
-                    shooting = true;
-
-                    if (ProjectileBullet)
-                    {
-                        StartCoroutine(ShootProjectile());
-                    }
-                    else
-                    {
-                        StartCoroutine(ShootHitscan());
-                    }
+                    StartCoroutine(ShootProjectile());
                 }
                 else
                 {
-                    shooting = false;
+                    StartCoroutine(ShootHitscan());
                 }
+            }
+            else if (interactableObject.IsGrabbedRight && rightShoot && !shootRoutineRunning) // dont shoot if already shooting :)
+            {
+                shooting = true;
+
+                if (ProjectileBullet)
+                {
+                    StartCoroutine(ShootProjectile());
+                }
+                else
+                {
+                    StartCoroutine(ShootHitscan());
+                }
+            }
+            else
+            {
+                shooting = false;
             }
 
         }

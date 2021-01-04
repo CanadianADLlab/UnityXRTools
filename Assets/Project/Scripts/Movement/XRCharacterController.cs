@@ -62,6 +62,7 @@ namespace EpicXRCrossPlatformInput
             leftController = XRPositionManager.Instance.LeftHand.GetComponent<EpicXRCrossPlatformInput.Controller>();
             rightController = XRPositionManager.Instance.RightHand.GetComponent<EpicXRCrossPlatformInput.Controller>();
             followTransform = (new GameObject("FollowCamera")).transform;
+            followTransform.transform.rotation = VrCamera.transform.parent.rotation;
             followTransform.parent = VrCamera.transform.parent;
             rb = GetComponent<Rigidbody>();
         }
