@@ -44,6 +44,7 @@ namespace EpicXRCrossPlatformInput
         [Header("Effect Settings")]
         public AudioClip GunSound;
         public AudioClip EmptyClipSound;
+        public ParticleSystem GunEffect; // Thing that plays when gun shoots
 
 
 
@@ -134,6 +135,7 @@ namespace EpicXRCrossPlatformInput
                 yield return new WaitForSeconds(fireRate);
             }
             yield return null;
+            StopFX();
             shootRoutineRunning = false;
         }
 
@@ -150,12 +152,27 @@ namespace EpicXRCrossPlatformInput
                 yield return new WaitForSeconds(fireRate);
             }
             yield return null;
+            StopFX();
             shootRoutineRunning = false;
         }
 
         private void PlayFX()
         {
             print("Wow sweet fx");
+            if(!GunEffect.isPlaying)
+            {
+                GunEffect.Play();
+            }
+        }
+
+
+        private void StopFX()
+        {
+            print("Wow sweet fx");
+            if (GunEffect.isPlaying)
+            {
+                GunEffect.Stop();
+            }
         }
 
         private void PlaySound()

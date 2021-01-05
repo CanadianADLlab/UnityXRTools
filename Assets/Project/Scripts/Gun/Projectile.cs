@@ -22,8 +22,6 @@ namespace EpicXRCrossPlatformInput
             bool result = tmp != 0;
             if (result)
             {
-                print(collision.gameObject.layer);
-                print(collision.gameObject.name);
                 ProjectileCollided.Invoke(); // Calls a unity event when it hits do whatever here
             }
         }
