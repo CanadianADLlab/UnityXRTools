@@ -100,7 +100,7 @@ namespace EpicXRCrossPlatformInput
         // public vectors
         [HideInInspector]
         public Vector2 LeftStickAxis;
-        [HideInInspector]
+        [HideInInspector] 
         public Vector2 RightStickAxis;
 
 

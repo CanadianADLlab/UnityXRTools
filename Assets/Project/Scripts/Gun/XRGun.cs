@@ -25,13 +25,18 @@ namespace EpicXRCrossPlatformInput
         public float FireRate = 30; // Shots per second if set to auto 
         public bool Automatic = true;
         public Transform ShootPosition; // Will shoot and or raycast from this position
-        public bool ProjectileBullet = false; // If not hitscan will cast a projectile from shootPos
-        [DrawIf("ProjectileBullet", true)]  // the user doesn't need to see these if no hands
-        public float BulletSpeed = 100;
+        public float ShootDistance = 50; // raycast distance
         [DrawIf("ProjectileBullet", false)]
         public LayerMask ShootRaycastLayers = ~0;
-        [DrawIf("ProjectileBullet", false)]
-        public float ShootDistance = 50; // raycast distance
+
+
+
+        [Header("Projectile specific settings")]
+        public bool ProjectileBullet = false; // If not hitscan will cast a projectile from shootPos
+        [DrawIf("ProjectileBullet", true)]  // the user doesn't need to see these if no hands
+        public float BulletPower = 1000;
+        [DrawIf("ProjectileBullet", true)]  // the user doesn't need to see these if no hands
+        public GameObject ProjectilePrefab;
 
 
 
@@ -136,8 +141,14 @@ namespace EpicXRCrossPlatformInput
         {
             shootRoutineRunning = true;
 
-            PlayFX();
-            PlaySound();
+            while (shooting)
+            {
+                PlayFX();
+                PlaySound();
+                GameObject projectile = GameObject.Instantiate(ProjectilePrefab,ShootPosition.position,ShootPosition.rotation);
+                projectile.GetComponent<Rigidbody>().AddForce(ShootPosition.TransformDirection(new Vector3(0,0, BulletPower)));
+                yield return new WaitForSeconds(fireRate);
+            }
             yield return null;
             shootRoutineRunning = false;
         }
