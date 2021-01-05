@@ -7925,7 +7925,7 @@ MonoBehaviour:
   ProjectileBullet: 1
   BulletPower: 50
   ProjectilePrefab: {fileID: 7432189300626446921, guid: b9fb173022445804cbbb1eda1ed69880, type: 3}
-  GunSound: {fileID: 0}
+  GunSound: {fileID: 8300000, guid: c7a5c8c05f79c124ea2c1113382eb334, type: 3}
   EmptyClipSound: {fileID: 0}
   GunEffect: {fileID: 8933950311780830426}
 --- !u!1001 &2008286447

@@ -177,7 +177,8 @@ namespace EpicXRCrossPlatformInput
 
         private void PlaySound()
         {
-            print("BANG BANG");
+            print("Playing audio");
+            gunAudioSource.PlayOneShot(GunSound);
         }
 
         /// <summary>
