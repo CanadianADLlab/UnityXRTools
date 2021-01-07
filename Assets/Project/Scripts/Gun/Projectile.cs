@@ -37,7 +37,7 @@ namespace EpicXRCrossPlatformInput
         }
         public void OnHitDebug()
         {
-            print("Hit");
+            Destroy(this.gameObject);
         }
     }
 }

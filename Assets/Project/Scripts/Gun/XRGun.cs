@@ -47,6 +47,12 @@ namespace EpicXRCrossPlatformInput
         public ParticleSystem GunEffect; // Thing that plays when gun shoots
 
 
+        [Header("Recoil Settings")]
+        public Transform RecoilTranform;
+        public float HorizontalRecoil = 1.5f;
+        public float VerticalRecoil = 1.5f;
+
+
 
 
         private InteractableObject interactableObject;
@@ -65,6 +71,8 @@ namespace EpicXRCrossPlatformInput
             CheckForInputConflicts();
         }
 
+       
+     
         private void Update()
         {
             // The word shoot is starting to not event sound like a word now
@@ -132,6 +140,8 @@ namespace EpicXRCrossPlatformInput
                 {
                     print("We hit the target boss man " + hit.transform.name);
                 }
+                StopCoroutine(DoRecoil());
+                StartCoroutine(DoRecoil());
                 yield return new WaitForSeconds(fireRate);
             }
             yield return null;
@@ -149,6 +159,8 @@ namespace EpicXRCrossPlatformInput
                 PlaySound();
                 GameObject projectile = GameObject.Instantiate(ProjectilePrefab,ShootPosition.position,ShootPosition.rotation);
                 projectile.GetComponent<Rigidbody>().AddForce(ShootPosition.TransformDirection(new Vector3(0,0, BulletPower)));
+                StopCoroutine(DoRecoil());
+                StartCoroutine(DoRecoil());
                 yield return new WaitForSeconds(fireRate);
             }
             yield return null;
@@ -158,7 +170,7 @@ namespace EpicXRCrossPlatformInput
 
         private void PlayFX()
         {
-            print("Wow sweet fx");
+
             if(!GunEffect.isPlaying)
             {
                 GunEffect.Play();
@@ -166,9 +178,18 @@ namespace EpicXRCrossPlatformInput
         }
 
 
+        private IEnumerator DoRecoil()
+        {
+            while(shooting)
+            {
+                transform.localEulerAngles += new Vector3(HorizontalRecoil, VerticalRecoil, 0);
+                yield return new WaitForSeconds(fireRate);
+            }
+            
+        }
+
         private void StopFX()
         {
-            print("Wow sweet fx");
             if (GunEffect.isPlaying)
             {
                 GunEffect.Stop();
@@ -177,7 +198,6 @@ namespace EpicXRCrossPlatformInput
 
         private void PlaySound()
         {
-            print("Playing audio");
             gunAudioSource.PlayOneShot(GunSound);
         }
 
