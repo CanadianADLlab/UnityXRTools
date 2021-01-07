@@ -80,7 +80,6 @@ namespace EpicXRCrossPlatformInput
         {
             if (other.gameObject.layer == interactable.ControllerLayer)
             {
-                print("firstHandOn " + firstHandOn);
                 Controller xrGamepad = other.GetComponent<Controller>();
                 if (!firstHandOn)
                 {

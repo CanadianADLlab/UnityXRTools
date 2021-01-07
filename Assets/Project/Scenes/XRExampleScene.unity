@@ -7928,6 +7928,9 @@ MonoBehaviour:
   GunSound: {fileID: 8300000, guid: c7a5c8c05f79c124ea2c1113382eb334, type: 3}
   EmptyClipSound: {fileID: 0}
   GunEffect: {fileID: 8933950311780830426}
+  RecoilDuration: 0.2
+  HorizontalRecoil: 1.5
+  VerticalRecoil: 1.5
 --- !u!1001 &2008286447
 PrefabInstance:
   m_ObjectHideFlags: 0

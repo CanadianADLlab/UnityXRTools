@@ -48,10 +48,9 @@ namespace EpicXRCrossPlatformInput
 
 
         [Header("Recoil Settings")]
-        public Transform RecoilTranform;
+        public float RecoilDuration = .2f;
         public float HorizontalRecoil = 1.5f;
         public float VerticalRecoil = 1.5f;
-
 
 
 
@@ -62,55 +61,84 @@ namespace EpicXRCrossPlatformInput
         private bool shootRoutineRunning = false;
         private bool shooting = false;
         private float fireRate = 0;
+        private Quaternion startingLocalRotation;
+        private bool wasGrabbed = false;
 
         private void Start()
         {
             interactableObject = GetComponent<InteractableObject>();
+            startingLocalRotation = transform.localRotation;
             fireRate = 1 / FireRate; // Shots per second 
             InitAudio();
             CheckForInputConflicts();
         }
 
        
-     
+        private void SetRecoilPosition()
+        {
+            print(interactableObject.WasGrabbed);
+            if(interactableObject.IsGrabbed && !wasGrabbed) // if we just grabbed
+            {
+                print("setting the pos ");
+                wasGrabbed = true;
+                startingLocalRotation = transform.localRotation;
+            }
+            else if(!interactableObject.IsGrabbed)
+            {
+                wasGrabbed = false;
+            }
+        }
         private void Update()
         {
             // The word shoot is starting to not event sound like a word now
             GetShootInput();
             CheckShoot();
+            SetRecoilPosition();
         }
 
         private void CheckShoot()
         {
             if (interactableObject.IsGrabbedLeft && leftShoot && !shootRoutineRunning) // dont shoot if already shooting :)
             {
-                shooting = true;
-                if (ProjectileBullet)
+                if (!shooting)
                 {
-                    StartCoroutine(ShootProjectile());
-                }
-                else
-                {
-                    StartCoroutine(ShootHitscan());
+                    shooting = true;
+                    if (ProjectileBullet)
+                    {
+                        StartCoroutine(ShootProjectile());
+                    }
+                    else
+                    {
+                        StartCoroutine(ShootHitscan());
+                    }
                 }
             }
             else if (interactableObject.IsGrabbedRight && rightShoot && !shootRoutineRunning) // dont shoot if already shooting :)
             {
-                shooting = true;
+                if (!shooting)
+                {
+                    shooting = true;
 
-                if (ProjectileBullet)
-                {
-                    StartCoroutine(ShootProjectile());
-                }
-                else
-                {
-                    StartCoroutine(ShootHitscan());
+                    if (ProjectileBullet)
+                    {
+                        StartCoroutine(ShootProjectile());
+                    }
+                    else
+                    {
+                        StartCoroutine(ShootHitscan());
+                    }
                 }
             }
-            else
+
+            if(interactableObject.IsGrabbedRight && !rightShoot)
             {
                 shooting = false;
             }
+            else if(interactableObject.IsGrabbedLeft && !leftShoot)
+            {
+                shooting = false;
+            }
+        
 
         }
 
@@ -130,7 +158,8 @@ namespace EpicXRCrossPlatformInput
         private IEnumerator ShootHitscan()
         {
             shootRoutineRunning = true;
-
+            StopCoroutine(DoRecoil());
+            StartCoroutine(DoRecoil());
             while (shooting)
             {
                 PlayFX();
@@ -140,8 +169,7 @@ namespace EpicXRCrossPlatformInput
                 {
                     print("We hit the target boss man " + hit.transform.name);
                 }
-                StopCoroutine(DoRecoil());
-                StartCoroutine(DoRecoil());
+        
                 yield return new WaitForSeconds(fireRate);
             }
             yield return null;
@@ -152,15 +180,15 @@ namespace EpicXRCrossPlatformInput
         private IEnumerator ShootProjectile()
         {
             shootRoutineRunning = true;
-
+            StopCoroutine(DoRecoil());
+            StartCoroutine(DoRecoil());
             while (shooting)
             {
                 PlayFX();
                 PlaySound();
                 GameObject projectile = GameObject.Instantiate(ProjectilePrefab,ShootPosition.position,ShootPosition.rotation);
                 projectile.GetComponent<Rigidbody>().AddForce(ShootPosition.TransformDirection(new Vector3(0,0, BulletPower)));
-                StopCoroutine(DoRecoil());
-                StartCoroutine(DoRecoil());
+
                 yield return new WaitForSeconds(fireRate);
             }
             yield return null;
@@ -170,7 +198,6 @@ namespace EpicXRCrossPlatformInput
 
         private void PlayFX()
         {
-
             if(!GunEffect.isPlaying)
             {
                 GunEffect.Play();
@@ -180,12 +207,32 @@ namespace EpicXRCrossPlatformInput
 
         private IEnumerator DoRecoil()
         {
-            while(shooting)
+            Quaternion postLocalRotation = startingLocalRotation;
+            while (shooting)
             {
                 transform.localEulerAngles += new Vector3(HorizontalRecoil, VerticalRecoil, 0);
+                postLocalRotation = transform.localRotation;
                 yield return new WaitForSeconds(fireRate);
             }
-            
+
+            float rotationProgress = 0;
+            float rotateAmount = Time.deltaTime / RecoilDuration;
+            while (rotationProgress < (1.0f - rotateAmount))
+            {
+                rotationProgress += rotateAmount;
+                if(!interactableObject.IsGrabbed || shooting ) // if we stop grabbing during recoil break or shooting resumes
+                {
+                    break; 
+                }
+
+                transform.localRotation = Quaternion.Slerp(postLocalRotation, startingLocalRotation, rotationProgress);
+                yield return null;
+            }
+        }
+
+        private bool QuaternionsEqual(Quaternion q1, Quaternion q2)
+        {
+            return (q1.Equals(q2) || (q1 == q2));
         }
 
         private void StopFX()
