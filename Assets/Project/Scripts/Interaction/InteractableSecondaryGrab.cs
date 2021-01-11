@@ -18,6 +18,7 @@ namespace EpicXRCrossPlatformInput
         [HideInInspector]
         public bool IsGrabbed = false;
 
+
         [Tooltip("Some guns are backwards enable this to make it correct")]
         public bool ReverseGrabLook = false;
 
@@ -41,7 +42,6 @@ namespace EpicXRCrossPlatformInput
             leftController = XRPositionManager.Instance.LeftHand.GetComponent<EpicXRCrossPlatformInput.Controller>();
             rightController = XRPositionManager.Instance.RightHand.GetComponent<EpicXRCrossPlatformInput.Controller>();
             mainGrab = GetComponent<InteractableObject>();
-
             controllerLayerMask = mainGrab.ControllerLayer;
         }
 
@@ -55,9 +55,9 @@ namespace EpicXRCrossPlatformInput
         private void Update()
         {
             UpdateGrabButton(); // Just checks for the input of the grab button
-
             if (IsGrabbed && IsGrabbedRight)
             {
+             
                 // Maybe add an offset to move down
                 if (ReverseGrabLook)
                 {
@@ -65,24 +65,22 @@ namespace EpicXRCrossPlatformInput
                 }
                 else
                 {
-                    transform.LookAt((rightController.transform.position));
+                    transform.LookAt((rightController.transform.position ) );
                 }
-
                 transform.position = leftController.transform.position;
             }
             if (IsGrabbed && IsGrabbedLeft)
             {
                 if (ReverseGrabLook)
                 {
-                    transform.LookAt((2 * transform.position - leftController.transform.position)); // Look backwards
+                    transform.LookAt((2 * transform.position - leftController.transform.position) ); // Look backwards
                 }
                 else
                 {
-                    transform.LookAt((leftController.transform.position));
+                    transform.LookAt((leftController.transform.position) );
                 }
                 transform.position = rightController.transform.position;
             }
-
 
             if (!mainGrab.IsGrabbed && IsGrabbed)
             {
@@ -174,7 +172,6 @@ namespace EpicXRCrossPlatformInput
         private IEnumerator WaitToGrabLeft()
         {
             yield return new WaitForEndOfFrame();
-            print("Doing left grab");
             leftController.IsBeingUsed = true;
             IsGrabbedLeft = true;
             OnGrab(XRPositionManager.Instance.LeftHand.gameObject);
@@ -185,7 +182,6 @@ namespace EpicXRCrossPlatformInput
         private IEnumerator WaitToGrabRight()
         {
             yield return new WaitForEndOfFrame();
-            print("Doing right grab");
             rightController.IsBeingUsed = true;
             IsGrabbedRight = true;
             OnGrab(XRPositionManager.Instance.RightHand.gameObject);

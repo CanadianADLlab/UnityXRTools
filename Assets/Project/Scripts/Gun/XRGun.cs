@@ -52,6 +52,7 @@ namespace EpicXRCrossPlatformInput
         public float HorizontalRecoil = 1.5f;
         public float VerticalRecoil = 1.5f;
 
+       
 
 
         private InteractableObject interactableObject;
@@ -63,9 +64,14 @@ namespace EpicXRCrossPlatformInput
         private float fireRate = 0;
         private Quaternion startingLocalRotation;
         private bool wasGrabbed = false;
+        private InteractableSecondaryGrab secondGrab;
 
         private void Start()
         {
+            if(GetComponent<InteractableSecondaryGrab>())
+            {
+                secondGrab = GetComponent<InteractableSecondaryGrab>();
+            }
             interactableObject = GetComponent<InteractableObject>();
             startingLocalRotation = transform.localRotation;
             fireRate = 1 / FireRate; // Shots per second 
@@ -208,9 +214,10 @@ namespace EpicXRCrossPlatformInput
         private IEnumerator DoRecoil()
         {
             Quaternion postLocalRotation = startingLocalRotation;
+            Vector3 recoil = new Vector3(HorizontalRecoil, VerticalRecoil, 0);
             while (shooting)
             {
-                transform.localEulerAngles += new Vector3(HorizontalRecoil, VerticalRecoil, 0);
+                transform.localEulerAngles += recoil;
                 postLocalRotation = transform.localRotation;
                 yield return new WaitForSeconds(fireRate);
             }
@@ -224,16 +231,18 @@ namespace EpicXRCrossPlatformInput
                 {
                     break; 
                 }
+               
+                if (secondGrab == null || !secondGrab.IsGrabbed)
+                {
+                    transform.localRotation = Quaternion.Slerp(postLocalRotation, startingLocalRotation, rotationProgress);
+                }
 
-                transform.localRotation = Quaternion.Slerp(postLocalRotation, startingLocalRotation, rotationProgress);
+
+                postLocalRotation = transform.localRotation;
                 yield return null;
             }
         }
 
-        private bool QuaternionsEqual(Quaternion q1, Quaternion q2)
-        {
-            return (q1.Equals(q2) || (q1 == q2));
-        }
 
         private void StopFX()
         {
