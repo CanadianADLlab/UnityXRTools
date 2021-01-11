@@ -13,10 +13,9 @@ namespace EpicXRCrossPlatformInput
     [RequireComponent(typeof(InteractableObject))]
     public class XRGun : MonoBehaviour
     {
-
+         // Public vars
         [Header("Input Settings")]
         public ButtonTypes ShootButton = ButtonTypes.Trigger;
-
 
         [Header("Clip and Shooting Settings")]
         public bool InfiniteAmmo = false;
@@ -39,8 +38,6 @@ namespace EpicXRCrossPlatformInput
         public GameObject ProjectilePrefab;
 
 
-
-
         [Header("Effect Settings")]
         public AudioClip GunSound;
         public AudioClip EmptyClipSound;
@@ -55,10 +52,9 @@ namespace EpicXRCrossPlatformInput
 
         [Header("Clip Settings")]
         public int ClipSize = 30;
+        public string ClipTag; // I deciced to use tags here because there could be a lot of different clip variants
 
-
-
-
+        // Private vars
         private InteractableObject interactableObject;
         private bool leftShoot = false;
         private bool rightShoot = false;
@@ -95,7 +91,6 @@ namespace EpicXRCrossPlatformInput
             print(interactableObject.WasGrabbed);
             if(interactableObject.IsGrabbed && !wasGrabbed) // if we just grabbed
             {
-                print("setting the pos ");
                 wasGrabbed = true;
                 startingLocalRotation = transform.localRotation;
             }
@@ -284,7 +279,6 @@ namespace EpicXRCrossPlatformInput
             }
         }
 
-
         private void StopFX()
         {
             if (GunEffect.isPlaying)
@@ -313,6 +307,18 @@ namespace EpicXRCrossPlatformInput
             leftShoot = XRCrossPlatformInputManager.Instance.GetInputByButton(ShootButton, ControllerHand.Left, Automatic);
             rightShoot = XRCrossPlatformInputManager.Instance.GetInputByButton(ShootButton, ControllerHand.Right, Automatic);
         }
+
+
+        private void OnTriggerEnter(Collider other)
+        {
+            
+        }
+
+        private void OnTriggerStay(Collider other)
+        {
+
+        }
+
     }
 
 }
