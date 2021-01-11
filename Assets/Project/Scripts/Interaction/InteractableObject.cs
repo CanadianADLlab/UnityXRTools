@@ -57,6 +57,8 @@ namespace EpicXRCrossPlatformInput
         private Controller rightController;
         private Controller leftController;
 
+        private bool oldColliderTrigger = false;
+
         private void Start()
         {
             leftController = XRPositionManager.Instance.LeftHand.GetComponent<Controller>();
@@ -255,7 +257,11 @@ namespace EpicXRCrossPlatformInput
                 transform.localEulerAngles = new Vector3(270.0f, 180.0f, 0.0f);
             }
 
-       
+            if (transform.GetComponent<Collider>())
+            {
+                oldColliderTrigger = transform.GetComponent<Collider>().isTrigger;
+                transform.GetComponent<Collider>().isTrigger = true;
+            }
             // Controller is only hidden if controller hidden bool is true
             HideController(controller);
         }
@@ -280,6 +286,10 @@ namespace EpicXRCrossPlatformInput
             {
                 transform.GetComponent<Rigidbody>().velocity = velocity * ThrowVelocityMultiplier; // Adding velocity 
                 transform.GetComponent<Rigidbody>().AddTorque((torque * ThrowTorqueMultiplier)); // Adding velocity 
+            }
+            if (transform.GetComponent<Collider>())
+            {
+                transform.GetComponent<Collider>().isTrigger = oldColliderTrigger;
             }
             isOldParentSet = false; // When we are done we don't need to know what the old parent is
         }

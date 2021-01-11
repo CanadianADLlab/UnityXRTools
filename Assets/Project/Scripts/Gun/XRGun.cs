@@ -15,7 +15,7 @@ namespace EpicXRCrossPlatformInput
     {
          // Public vars
         [Header("Input Settings")]
-        public ButtonTypes ShootButton = ButtonTypes.Trigger;
+        public ButtonTypes ShootButton = ButtonTypes.Secondary;
 
         [Header("Clip and Shooting Settings")]
         public bool InfiniteAmmo = false;
@@ -53,6 +53,11 @@ namespace EpicXRCrossPlatformInput
         [Header("Clip Settings")]
         public int ClipSize = 30;
         public string ClipTag; // I deciced to use tags here because there could be a lot of different clip variants
+        public ButtonTypes ClipReleaseButton = ButtonTypes.Primary;
+        [Tooltip("This is the clip that is part of the gun, its gets turned off when clip is dropped")]
+        public GameObject ClipInGun;
+        [Tooltip("The clip prefab is spawned in and looks like the clip is falling")]
+        public GameObject ClipPrefab; 
 
         // Private vars
         private InteractableObject interactableObject;
@@ -69,10 +74,11 @@ namespace EpicXRCrossPlatformInput
         private int roundsInClip = 0;
         private bool clipHasRounds = true;
         private bool emptyClipAudioAloudToPlay = false;
+        private bool clipOut = false;
+        private bool releaseClip = false;
 
         private void Start()
         {
-
             if(GetComponent<InteractableSecondaryGrab>())
             {
                 secondGrab = GetComponent<InteractableSecondaryGrab>();
@@ -102,8 +108,10 @@ namespace EpicXRCrossPlatformInput
         private void Update()
         {
             // The word shoot is starting to not event sound like a word now
+            GetClipReleaseInput(); // checks to see if we drop the clip
             GetShootInput();
             CheckShoot();
+            CheckClipRelease();
             SetRecoilPosition();
         }
 
@@ -297,7 +305,7 @@ namespace EpicXRCrossPlatformInput
         /// </summary>
         private void CheckForInputConflicts()
         {
-            if (interactableObject.GrabButton == ShootButton)
+            if (interactableObject.GrabButton == ShootButton || ClipReleaseButton == ShootButton)
             {
                 Debug.LogError("The Interact Grab script attatch to " + this.transform.name + " has the same input as the XRGun script on the same object");
             }
@@ -307,16 +315,57 @@ namespace EpicXRCrossPlatformInput
             leftShoot = XRCrossPlatformInputManager.Instance.GetInputByButton(ShootButton, ControllerHand.Left, Automatic);
             rightShoot = XRCrossPlatformInputManager.Instance.GetInputByButton(ShootButton, ControllerHand.Right, Automatic);
         }
+        private void GetClipReleaseInput()
+        {
+            releaseClip = XRCrossPlatformInputManager.Instance.GetInputByButton(ClipReleaseButton, ControllerHand.Right, false);
+        }
+
+        private void CheckClipRelease()
+        {
+            if(releaseClip && !clipOut)
+            {
+                clipOut = true;
+                roundsInClip = 0;
+                clipHasRounds = false;
+                GameObject fallingClip = GameObject.Instantiate(ClipPrefab);
+                fallingClip.transform.parent = ClipInGun.transform.parent;
+                fallingClip.transform.localScale = ClipInGun.transform.localScale;
+                fallingClip.transform.rotation = ClipInGun.transform.rotation;
+                fallingClip.transform.position = ClipInGun.transform.position;
+                fallingClip.transform.parent = null;
+                ClipInGun.SetActive(false);
+            }
+        }
 
 
         private void OnTriggerEnter(Collider other)
         {
-            
+            CheckReload(other);
         }
 
         private void OnTriggerStay(Collider other)
         {
+            CheckReload(other);
+        }
 
+
+        private void CheckReload(Collider other) // looks for a clips and reloads
+        {
+            print("Trigger with the gun " + other.tag);
+            if (other.tag.Equals(ClipTag) && clipOut )
+            {
+                clipHasRounds = true;
+                roundsInClip = ClipSize;
+                clipOut = false;
+                ClipInGun.SetActive(true);
+                InteractableObject grabScript = other.transform.GetComponent<InteractableObject>();
+                if(grabScript == null)
+                {
+                    grabScript = other.transform.GetComponentInParent<InteractableObject>();
+                }
+                grabScript.ReleaseGrab();
+                Destroy(other.gameObject);
+            }
         }
 
     }

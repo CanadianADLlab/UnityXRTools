@@ -6,6 +6,7 @@ TagManager:
   tags:
   - LeftController
   - RightController
+  - mp7clip
   layers:
   - Default
   - TransparentFX

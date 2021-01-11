@@ -100,20 +100,21 @@ namespace EpicXRCrossPlatformInput
                 }
                 else if (IsTwoHands && interactable.IsGrabbed) // if already being primary held we check to make sure its a two hander before turning on the other hand
                 {
-                    if (xrGamepad.Hand == ControllerHand.Left && !leftHandOn) // Make sure the left hand isn't already holding item
-                    {
-                        secondaryHandOn = true;
-                        secondaryGrabbingController = null;
-                        ToggleHand(SecondaryLeftHandMesh, true);
-                        xrGamepad.HideController();
-                    }
-                    else if (xrGamepad.Hand == ControllerHand.Right && !rightHandOn)
-                    {
-                        secondaryHandOn = true;
-                        secondaryGrabbingController = null;
-                        ToggleHand(SecondaryRightHandMesh, true);
-                        xrGamepad.HideController();
-                    }
+                    
+                        if (xrGamepad.Hand == ControllerHand.Left && !leftHandOn && !XRPositionManager.Instance.LeftHand.GetComponent<Controller>().IsGrabbing) // Make sure the left hand isn't already holding item
+                        {
+                            secondaryHandOn = true;
+                            secondaryGrabbingController = null;
+                            ToggleHand(SecondaryLeftHandMesh, true);
+                            xrGamepad.HideController();
+                        }
+                        else if (xrGamepad.Hand == ControllerHand.Right && !rightHandOn && !XRPositionManager.Instance.RightHand.GetComponent<Controller>().IsGrabbing)
+                        {
+                            secondaryHandOn = true;
+                            secondaryGrabbingController = null;
+                            ToggleHand(SecondaryRightHandMesh, true);
+                            xrGamepad.HideController();
+                        }
                 }
             }
         }
