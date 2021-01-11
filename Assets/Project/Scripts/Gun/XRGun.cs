@@ -29,7 +29,6 @@ namespace EpicXRCrossPlatformInput
         public LayerMask ShootRaycastLayers = ~0;
 
 
-
         [Header("Projectile specific settings")]
         public bool ProjectileBullet = false; // If not hitscan will cast a projectile from shootPos
         [DrawIf("ProjectileBullet", true)]  // the user doesn't need to see these if no hands
@@ -51,12 +50,18 @@ namespace EpicXRCrossPlatformInput
 
 
         [Header("Clip Settings")]
+        public bool IsReloadingEnabled = true;
+        [DrawIf("IsReloadingEnabled", true)]
         public int ClipSize = 30;
+        [DrawIf("IsReloadingEnabled", true)]
         public string ClipTag; // I deciced to use tags here because there could be a lot of different clip variants
+        [DrawIf("IsReloadingEnabled", true)]
         public ButtonTypes ClipReleaseButton = ButtonTypes.Primary;
         [Tooltip("This is the clip that is part of the gun, its gets turned off when clip is dropped")]
+        [DrawIf("IsReloadingEnabled", true)]
         public GameObject ClipInGun;
         [Tooltip("The clip prefab is spawned in and looks like the clip is falling")]
+        [DrawIf("IsReloadingEnabled", true)]
         public GameObject ClipPrefab; 
 
         // Private vars
@@ -235,15 +240,18 @@ namespace EpicXRCrossPlatformInput
 
         private void RemoveBullet() // just subtracts 1 from the clip
         {
-            if (roundsInClip > 0)
+            if (IsReloadingEnabled)
             {
-                roundsInClip--;
-            }
-            else
-            {
-                emptyClipAudioAloudToPlay = true;
-                clipHasRounds = false;
-                shooting = false;
+                if (roundsInClip > 0)
+                {
+                    roundsInClip--;
+                }
+                else
+                {
+                    emptyClipAudioAloudToPlay = true;
+                    clipHasRounds = false;
+                    shooting = false;
+                }
             }
         }
         private void PlayFX()
@@ -322,18 +330,21 @@ namespace EpicXRCrossPlatformInput
 
         private void CheckClipRelease()
         {
-            if(releaseClip && !clipOut)
+            if (IsReloadingEnabled)
             {
-                clipOut = true;
-                roundsInClip = 0;
-                clipHasRounds = false;
-                GameObject fallingClip = GameObject.Instantiate(ClipPrefab);
-                fallingClip.transform.parent = ClipInGun.transform.parent;
-                fallingClip.transform.localScale = ClipInGun.transform.localScale;
-                fallingClip.transform.rotation = ClipInGun.transform.rotation;
-                fallingClip.transform.position = ClipInGun.transform.position;
-                fallingClip.transform.parent = null;
-                ClipInGun.SetActive(false);
+                if (releaseClip && !clipOut)
+                {
+                    clipOut = true;
+                    roundsInClip = 0;
+                    clipHasRounds = false;
+                    GameObject fallingClip = GameObject.Instantiate(ClipPrefab);
+                    fallingClip.transform.parent = ClipInGun.transform.parent;
+                    fallingClip.transform.localScale = ClipInGun.transform.localScale;
+                    fallingClip.transform.rotation = ClipInGun.transform.rotation;
+                    fallingClip.transform.position = ClipInGun.transform.position;
+                    fallingClip.transform.parent = null;
+                    ClipInGun.SetActive(false);
+                }
             }
         }
 
@@ -351,20 +362,23 @@ namespace EpicXRCrossPlatformInput
 
         private void CheckReload(Collider other) // looks for a clips and reloads
         {
-            print("Trigger with the gun " + other.tag);
-            if (other.tag.Equals(ClipTag) && clipOut )
+            if (IsReloadingEnabled)
             {
-                clipHasRounds = true;
-                roundsInClip = ClipSize;
-                clipOut = false;
-                ClipInGun.SetActive(true);
-                InteractableObject grabScript = other.transform.GetComponent<InteractableObject>();
-                if(grabScript == null)
+                print("Trigger with the gun " + other.tag);
+                if (other.tag.Equals(ClipTag) && clipOut)
                 {
-                    grabScript = other.transform.GetComponentInParent<InteractableObject>();
+                    clipHasRounds = true;
+                    roundsInClip = ClipSize;
+                    clipOut = false;
+                    ClipInGun.SetActive(true);
+                    InteractableObject grabScript = other.transform.GetComponent<InteractableObject>();
+                    if (grabScript == null)
+                    {
+                        grabScript = other.transform.GetComponentInParent<InteractableObject>();
+                    }
+                    grabScript.ReleaseGrab();
+                    Destroy(other.gameObject);
                 }
-                grabScript.ReleaseGrab();
-                Destroy(other.gameObject);
             }
         }
 
