@@ -52,7 +52,11 @@ namespace EpicXRCrossPlatformInput
         public float HorizontalRecoil = 1.5f;
         public float VerticalRecoil = 1.5f;
 
-       
+
+        [Header("Clip Settings")]
+        public int ClipSize = 30;
+
+
 
 
         private InteractableObject interactableObject;
@@ -66,8 +70,13 @@ namespace EpicXRCrossPlatformInput
         private bool wasGrabbed = false;
         private InteractableSecondaryGrab secondGrab;
 
+        private int roundsInClip = 0;
+        private bool clipHasRounds = true;
+        private bool emptyClipAudioAloudToPlay = false;
+
         private void Start()
         {
+
             if(GetComponent<InteractableSecondaryGrab>())
             {
                 secondGrab = GetComponent<InteractableSecondaryGrab>();
@@ -75,11 +84,12 @@ namespace EpicXRCrossPlatformInput
             interactableObject = GetComponent<InteractableObject>();
             startingLocalRotation = transform.localRotation;
             fireRate = 1 / FireRate; // Shots per second 
+            roundsInClip = ClipSize;
             InitAudio();
             CheckForInputConflicts();
         }
 
-       
+     
         private void SetRecoilPosition()
         {
             print(interactableObject.WasGrabbed);
@@ -109,7 +119,7 @@ namespace EpicXRCrossPlatformInput
                 if (!shooting)
                 {
                     shooting = true;
-                    if (ProjectileBullet)
+                    if (ProjectileBullet && clipHasRounds)
                     {
                         StartCoroutine(ShootProjectile());
                     }
@@ -118,10 +128,14 @@ namespace EpicXRCrossPlatformInput
                         StartCoroutine(ShootHitscan());
                     }
                 }
+                else if (emptyClipAudioAloudToPlay)
+                {
+                    PlayEmptyClipAudio();
+                }
             }
             else if (interactableObject.IsGrabbedRight && rightShoot && !shootRoutineRunning) // dont shoot if already shooting :)
             {
-                if (!shooting)
+                if (!shooting && clipHasRounds)
                 {
                     shooting = true;
 
@@ -134,14 +148,21 @@ namespace EpicXRCrossPlatformInput
                         StartCoroutine(ShootHitscan());
                     }
                 }
+                else if(emptyClipAudioAloudToPlay)
+                {
+                   
+                    PlayEmptyClipAudio();
+                }
             }
 
             if(interactableObject.IsGrabbedRight && !rightShoot)
             {
+                emptyClipAudioAloudToPlay = true;
                 shooting = false;
             }
             else if(interactableObject.IsGrabbedLeft && !leftShoot)
             {
+                emptyClipAudioAloudToPlay = true;
                 shooting = false;
             }
         
@@ -161,6 +182,11 @@ namespace EpicXRCrossPlatformInput
             gunAudioSource.clip = GunSound;
         }
 
+        private void PlayEmptyClipAudio()
+        {
+            emptyClipAudioAloudToPlay = false;
+            gunAudioSource.PlayOneShot(EmptyClipSound);
+        }
         private IEnumerator ShootHitscan()
         {
             shootRoutineRunning = true;
@@ -170,6 +196,7 @@ namespace EpicXRCrossPlatformInput
             {
                 PlayFX();
                 PlaySound();
+                RemoveBullet();
                 RaycastHit hit;
                 if (Physics.Raycast(ShootPosition.transform.position, ShootPosition.transform.forward, out hit, ShootDistance, ShootRaycastLayers))
                 {
@@ -192,6 +219,7 @@ namespace EpicXRCrossPlatformInput
             {
                 PlayFX();
                 PlaySound();
+                RemoveBullet();
                 GameObject projectile = GameObject.Instantiate(ProjectilePrefab,ShootPosition.position,ShootPosition.rotation);
                 projectile.GetComponent<Rigidbody>().AddForce(ShootPosition.TransformDirection(new Vector3(0,0, BulletPower)));
 
@@ -202,6 +230,19 @@ namespace EpicXRCrossPlatformInput
             shootRoutineRunning = false;
         }
 
+        private void RemoveBullet() // just subtracts 1 from the clip
+        {
+            if (roundsInClip > 0)
+            {
+                roundsInClip--;
+            }
+            else
+            {
+                emptyClipAudioAloudToPlay = true;
+                clipHasRounds = false;
+                shooting = false;
+            }
+        }
         private void PlayFX()
         {
             if(!GunEffect.isPlaying)
