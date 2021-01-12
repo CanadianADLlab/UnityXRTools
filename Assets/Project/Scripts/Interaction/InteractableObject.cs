@@ -14,6 +14,8 @@ namespace EpicXRCrossPlatformInput
     {
         [Header("Grab Settings")]
         public int ControllerLayer = 12;
+
+        public bool IsGrabEnabled = true;
    
         public bool HideControllerOnGrab = false;
         public bool HoldToGrab = true;
@@ -78,9 +80,12 @@ namespace EpicXRCrossPlatformInput
 
         private void Update()
         {
-            CheckWasGrabbed();
-            UpdateGrabButton();
-            CalculatedAverageVelocity();
+            if (IsGrabEnabled)
+            {
+                CheckWasGrabbed();
+                UpdateGrabButton();
+                CalculatedAverageVelocity();
+            }
         }
 
 

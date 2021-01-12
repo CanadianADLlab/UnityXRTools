@@ -363,7 +363,6 @@ namespace EpicXRCrossPlatformInput
         {
             if (IsReloadingEnabled)
             {
-                print("Trigger with the gun " + other.tag);
                 if (other.tag.Equals(ClipTag) && clipOut)
                 {
                     clipHasRounds = true;
@@ -375,10 +374,17 @@ namespace EpicXRCrossPlatformInput
                     {
                         grabScript = other.transform.GetComponentInParent<InteractableObject>();
                     }
+                    grabScript.IsGrabEnabled = false;
                     grabScript.ReleaseGrab();
-                    Destroy(other.gameObject);
+                    StartCoroutine(WaitToDestroyGameObject(other.gameObject));
                 }
             }
+        }
+
+        private IEnumerator WaitToDestroyGameObject(GameObject objectToMurder)
+        {
+            yield return new WaitForEndOfFrame();
+            Destroy(objectToMurder);
         }
 
     }

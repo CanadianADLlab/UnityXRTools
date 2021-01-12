@@ -8591,7 +8591,7 @@ MonoBehaviour:
   RecoilDuration: 0.2
   HorizontalRecoil: 1.5
   VerticalRecoil: 1.5
-  IsReloadingEnabled: 0
+  IsReloadingEnabled: 1
   ClipSize: 30
   ClipTag: mp7clip
   ClipReleaseButton: 2
