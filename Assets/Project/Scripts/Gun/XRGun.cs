@@ -99,7 +99,6 @@ namespace EpicXRCrossPlatformInput
      
         private void SetRecoilPosition()
         {
-            print(interactableObject.WasGrabbed);
             if(interactableObject.IsGrabbed && !wasGrabbed) // if we just grabbed
             {
                 wasGrabbed = true;

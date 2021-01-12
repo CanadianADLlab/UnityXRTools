@@ -100,21 +100,20 @@ namespace EpicXRCrossPlatformInput
                 }
                 else if (IsTwoHands && interactable.IsGrabbed) // if already being primary held we check to make sure its a two hander before turning on the other hand
                 {
-                    
-                        if (xrGamepad.Hand == ControllerHand.Left && !leftHandOn && !XRPositionManager.Instance.LeftHand.GetComponent<Controller>().IsGrabbing) // Make sure the left hand isn't already holding item
-                        {
-                            secondaryHandOn = true;
-                            secondaryGrabbingController = null;
-                            ToggleHand(SecondaryLeftHandMesh, true);
-                            xrGamepad.HideController();
-                        }
-                        else if (xrGamepad.Hand == ControllerHand.Right && !rightHandOn && !XRPositionManager.Instance.RightHand.GetComponent<Controller>().IsGrabbing)
-                        {
-                            secondaryHandOn = true;
-                            secondaryGrabbingController = null;
-                            ToggleHand(SecondaryRightHandMesh, true);
-                            xrGamepad.HideController();
-                        }
+                    if (xrGamepad.Hand == ControllerHand.Left && !leftHandOn && !XRPositionManager.Instance.LeftHand.GetComponent<Controller>().IsGrabbing) // Make sure the left hand isn't already holding item
+                    {
+                        secondaryHandOn = true;
+                        secondaryGrabbingController = null;
+                        ToggleHand(SecondaryLeftHandMesh, true);
+                        xrGamepad.HideController();
+                    }
+                    else if (xrGamepad.Hand == ControllerHand.Right && !rightHandOn && !XRPositionManager.Instance.RightHand.GetComponent<Controller>().IsGrabbing)
+                    {
+                        secondaryHandOn = true;
+                        secondaryGrabbingController = null;
+                        ToggleHand(SecondaryRightHandMesh, true);
+                        xrGamepad.HideController();
+                    }
                 }
             }
         }
@@ -191,6 +190,7 @@ namespace EpicXRCrossPlatformInput
                 {
                     if (!secondaryHandOn && !firstHandOn)
                     {
+                        print("Turning off");
                         ToggleHand(LeftHandMesh, false);
                         XRPositionManager.Instance.LeftHand.GetComponent<Controller>().ShowController();
                         leftHandWasOn = false;
@@ -241,20 +241,19 @@ namespace EpicXRCrossPlatformInput
                         secondaryGrabbingController.ShowController();
                         secondaryGrabbingController = null;
                     }
+                    else if (firstHandOn && !rightHandOn && secondaryHandOn)
+                    {
+                        ToggleHand(SecondaryRightHandMesh, false);
+                        XRPositionManager.Instance.RightHand.GetComponent<Controller>().ShowController();
+                        secondaryGrabbingController = null;
+                    }
+                    else if (firstHandOn && !leftHandOn && secondaryHandOn)
+                    {
+                        ToggleHand(SecondaryLeftHandMesh, false);
+                        XRPositionManager.Instance.LeftHand.GetComponent<Controller>().ShowController();
+                        secondaryGrabbingController = null;
+                    }
                 }
-                else if (firstHandOn && !rightHandOn && secondaryHandOn)
-                {
-                    ToggleHand(SecondaryRightHandMesh, false);
-                    XRPositionManager.Instance.RightHand.GetComponent<Controller>().ShowController();
-                    secondaryGrabbingController = null;
-                }
-                else if (firstHandOn && !leftHandOn && secondaryHandOn)
-                {
-                    ToggleHand(SecondaryLeftHandMesh, false);
-                    XRPositionManager.Instance.LeftHand.GetComponent<Controller>().ShowController();
-                    secondaryGrabbingController = null;
-                }
-
             }
         }
         private void ToggleHand(GameObject hand, bool onOff)

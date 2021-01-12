@@ -205,7 +205,6 @@ namespace EpicXRCrossPlatformInput
         {
             if (WasGrabbed && !IsGrabbed)
             {
-                print("setting this bitch");
                 WasGrabbed = false;
             }
         }
