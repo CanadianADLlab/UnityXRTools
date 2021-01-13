@@ -6,7 +6,6 @@ public class Ladder : MonoBehaviour
 {
 
     public ButtonTypes ClimbButton = ButtonTypes.Trigger;
-    public bool InvertHorizontalClimbing = false;
 
 
     Rigidbody playerRB = null;
@@ -100,14 +99,7 @@ public class Ladder : MonoBehaviour
             if (XRCrossPlatformInputManager.Instance.GetInputByButton(ClimbButton, ControllerHand.Left, true))
             {
                 Vector3 _climbVector = trackerTransLeft.position - lastPosLeft;
-                if(InvertHorizontalClimbing)
-                {
-                    XRPositionManager.Instance.PlaySpace.transform.Translate(_climbVector);
-                }
-                else
-                {
-                    XRPositionManager.Instance.PlaySpace.transform.Translate(new Vector3(_climbVector.x, -_climbVector.y, _climbVector.z));
-                }
+                XRPositionManager.Instance.PlaySpace.transform.Translate(-_climbVector,Space.World);
                 climbing = true;
             }
 
@@ -120,14 +112,7 @@ public class Ladder : MonoBehaviour
             if (XRCrossPlatformInputManager.Instance.GetInputByButton(ClimbButton, ControllerHand.Right, true))
             {
                 Vector3 _climbVector = trackerTransRight.position - lastPosRight;
-                if (InvertHorizontalClimbing)
-                {
-                    XRPositionManager.Instance.PlaySpace.transform.Translate(_climbVector);
-                }
-                else
-                {
-                    XRPositionManager.Instance.PlaySpace.transform.Translate(new Vector3(_climbVector.x, -_climbVector.y, _climbVector.z));
-                }
+                XRPositionManager.Instance.PlaySpace.transform.Translate(-_climbVector, Space.World);
                 climbing = true;
             }
 
