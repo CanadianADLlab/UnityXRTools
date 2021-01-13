@@ -331,7 +331,7 @@ namespace EpicXRCrossPlatformInput
         {
             if (IsReloadingEnabled)
             {
-                if (releaseClip && !clipOut)
+                if (releaseClip && interactableObject.IsGrabbed && !clipOut)
                 {
                     clipOut = true;
                     roundsInClip = 0;

@@ -65,6 +65,15 @@ namespace EpicXRCrossPlatformInput
                     {
                         objectToBeGrabbed = hit.collider.transform.GetComponent<InteractableObject>();
                     }
+                    else if(hit.collider.transform.GetComponentInChildren<InteractableObject>() != null)
+                    {
+                        objectToBeGrabbed = hit.collider.transform.GetComponentInChildren<InteractableObject>();
+                    }
+                    else if(hit.collider.transform.GetComponentInParent<InteractableObject>() != null)
+                    {
+                        objectToBeGrabbed = hit.collider.transform.GetComponentInParent<InteractableObject>();
+                    }
+                 
 
                     if (objectToBeGrabbed != null && objectToBeGrabbed.SnapToController ) // we hit a grabable boy and we need to make sure it has snap mode 
                     {
@@ -79,11 +88,13 @@ namespace EpicXRCrossPlatformInput
                     }
                     else
                     {
+                        objectToBeGrabbed = null;
                         ToggleHandIcon(false);
                     }
                 }
                 else
                 {
+                    objectToBeGrabbed = null;
                     ToggleHandIcon(false);
                 }
             }
