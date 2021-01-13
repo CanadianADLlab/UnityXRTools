@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class Ladder : MonoBehaviour
 {
+
+    public ButtonTypes ClimbButton = ButtonTypes.Trigger;
+    public bool InvertHorizontalClimbing = false;
+
+
     Rigidbody playerRB = null;
     bool climbing = false;
 
@@ -66,7 +71,7 @@ public class Ladder : MonoBehaviour
         //trigger down********************************
         if (trackerTransLeft != null)
         {
-            if (XRCrossPlatformInputManager.Instance.GetInputByButton(ButtonTypes.Trigger, ControllerHand.Left, false))
+            if (XRCrossPlatformInputManager.Instance.GetInputByButton(ClimbButton, ControllerHand.Left, false))
             {
                 lastPosLeft = trackerTransLeft.position;
                 leftHandClimb = true;
@@ -78,7 +83,7 @@ public class Ladder : MonoBehaviour
 
         if (trackerTransRight != null)
         {
-            if (XRCrossPlatformInputManager.Instance.GetInputByButton(ButtonTypes.Trigger, ControllerHand.Right, false))
+            if (XRCrossPlatformInputManager.Instance.GetInputByButton(ClimbButton, ControllerHand.Right, false))
             {
                 lastPosRight = trackerTransRight.position;
                 leftHandClimb = false;
@@ -92,10 +97,17 @@ public class Ladder : MonoBehaviour
         if (trackerTransLeft != null && leftHandClimb)
         {
             //trigger hold
-            if (XRCrossPlatformInputManager.Instance.GetInputByButton(ButtonTypes.Trigger, ControllerHand.Left, true))
+            if (XRCrossPlatformInputManager.Instance.GetInputByButton(ClimbButton, ControllerHand.Left, true))
             {
                 Vector3 _climbVector = trackerTransLeft.position - lastPosLeft;
-                XRPositionManager.Instance.PlaySpace.transform.Translate(-_climbVector);
+                if(InvertHorizontalClimbing)
+                {
+                    XRPositionManager.Instance.PlaySpace.transform.Translate(_climbVector);
+                }
+                else
+                {
+                    XRPositionManager.Instance.PlaySpace.transform.Translate(new Vector3(_climbVector.x, -_climbVector.y, _climbVector.z));
+                }
                 climbing = true;
             }
 
@@ -105,10 +117,17 @@ public class Ladder : MonoBehaviour
         if (trackerTransRight != null && !leftHandClimb)
         {
             //trigger hold
-            if (XRCrossPlatformInputManager.Instance.GetInputByButton(ButtonTypes.Trigger, ControllerHand.Right, true))
+            if (XRCrossPlatformInputManager.Instance.GetInputByButton(ClimbButton, ControllerHand.Right, true))
             {
                 Vector3 _climbVector = trackerTransRight.position - lastPosRight;
-                XRPositionManager.Instance.PlaySpace.transform.Translate(-_climbVector);
+                if (InvertHorizontalClimbing)
+                {
+                    XRPositionManager.Instance.PlaySpace.transform.Translate(_climbVector);
+                }
+                else
+                {
+                    XRPositionManager.Instance.PlaySpace.transform.Translate(new Vector3(_climbVector.x, -_climbVector.y, _climbVector.z));
+                }
                 climbing = true;
             }
 
