@@ -35,6 +35,10 @@ namespace EpicXRCrossPlatformInput
         private bool rightButtonPressed = false;
         private bool leftButtonPressed = false;
 
+        private bool leftWasPressed = false;
+        private bool rightWasPressed = false;
+
+
 
 
         private void Start()
@@ -49,7 +53,7 @@ namespace EpicXRCrossPlatformInput
         private void UpdateGrabButton()
         {
             leftButtonPressed = XRCrossPlatformInputManager.Instance.GetInputByButton(mainGrab.GrabButton, ControllerHand.Left, true); // I'm just always gonna make people hold to grab for the secondary it seems to confusing otherwise but idk follow your heart and do whatever my dude
-            rightButtonPressed = XRCrossPlatformInputManager.Instance.GetInputByButton(mainGrab.GrabButton, ControllerHand.Right, true);
+            rightButtonPressed = XRCrossPlatformInputManager.Instance.GetInputByButton(mainGrab.GrabButton, ControllerHand.Right, true); 
         }
 
         private void Update()
@@ -57,7 +61,6 @@ namespace EpicXRCrossPlatformInput
             UpdateGrabButton(); // Just checks for the input of the grab button
             if (IsGrabbed && IsGrabbedRight)
             {
-             
                 // Maybe add an offset to move down
                 if (ReverseGrabLook)
                 {
@@ -87,7 +90,6 @@ namespace EpicXRCrossPlatformInput
                 ReleaseGrabRight();
                 ReleaseGrabLeft();
             }
-
         }
 
         private void CheckRelease()
@@ -113,6 +115,26 @@ namespace EpicXRCrossPlatformInput
         private void DrawDebugRay()
         {
             Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward));
+        }
+        private void OnTriggerEnter(Collider other)
+        {
+            if (rightButtonPressed)
+            {
+                rightWasPressed = true;
+            }
+            else
+            {
+                rightWasPressed = false;
+            }
+            if(leftButtonPressed)
+            {
+                leftButtonPressed = true;
+            }
+            else
+            {
+                leftButtonPressed = false;
+            }
+
         }
 
         private void OnTriggerStay(Collider other)
@@ -145,24 +167,7 @@ namespace EpicXRCrossPlatformInput
                             }
                         }
                     }
-                    else
-                    {
-                        if (leftButtonPressed && other.tag.Equals("LeftController") && !leftController.IsBeingUsed) // Making sure only the left can grab stuff if its the collision
-                        {
-                            if (!IsGrabbedLeft)
-                            {
-                                StartCoroutine(WaitToGrabLeft());
-                            }
-                        }
-
-                        if (leftButtonPressed && other.tag.Equals("RightController") && !rightController.IsBeingUsed) // Making sure only the right can grab stuff if its the collision
-                        {
-                            if (!IsGrabbedRight)
-                            {
-                                StartCoroutine(WaitToGrabRight());
-                            }
-                        }
-                    }
+           
                 }
                 CheckRelease();
             }

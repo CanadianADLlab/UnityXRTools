@@ -144,7 +144,10 @@ namespace EpicXRCrossPlatformInput
         }
         private void OnTriggerStay(Collider other)
         {
-            CheckGrab(other);
+            if (IsGrabEnabled)
+            {
+                CheckGrab(other);
+            }
         }
 
         public void CheckGrab(Collider other) // this is the ontrigger function moved so it can be called from other scripts
@@ -361,6 +364,26 @@ namespace EpicXRCrossPlatformInput
                 ReleaseGrabRight();
             }
 
+        }
+
+        /// <summary>
+        /// Makes sure everything is reset correctly than destorys itself
+        /// </summary>
+        public void MurderThanDestroy() // good function name I know
+        {
+            StartCoroutine(WaitToDestroy());
+        }
+
+        private IEnumerator WaitToDestroy()
+        {
+            IsGrabEnabled = false;
+            ReleaseGrab();
+
+            while(IsGrabbed)
+            {
+                yield return null;
+            }
+            Destroy(this.gameObject);
         }
     }
 }

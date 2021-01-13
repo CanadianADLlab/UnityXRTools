@@ -21,7 +21,7 @@ namespace EpicXRCrossPlatformInput
         public bool IsGrabbing = false;
         public bool IsBeingUsed = false;
 
-   
+
         // this used to be a longer function with steamvr because you had to loop through the weird mesh of that
         public void HideController()
         { 

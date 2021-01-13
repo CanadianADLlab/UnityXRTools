@@ -313,44 +313,44 @@ namespace EpicXRCrossPlatformInput
                 {
                     if (hand == ControllerHand.Left)
                     {
-                        return XRCrossPlatformInputManager.Instance.LeftGripPressed;
+                        return LeftGripPressed;
                     }
                     else
                     {
-                        return XRCrossPlatformInputManager.Instance.RightGripPressed;
+                        return RightGripPressed;
                     }
                 }
                 else if (inputButton == ButtonTypes.Trigger)
                 {
                     if (hand == ControllerHand.Left)
                     {
-                        return XRCrossPlatformInputManager.Instance.LeftTriggerPressed;
+                        return LeftTriggerPressed;
                     }
                     else
                     {
-                        return XRCrossPlatformInputManager.Instance.RightTriggerPressed;
+                        return RightTriggerPressed;
                     }
                 }
                 else if (inputButton == ButtonTypes.Primary)
                 {
                     if (hand == ControllerHand.Left)
                     {
-                        return XRCrossPlatformInputManager.Instance.LeftPrimaryButtonPressed;
+                        return LeftPrimaryButtonPressed;
                     }
                     else
                     {
-                        return XRCrossPlatformInputManager.Instance.RightPrimaryButtonPressed;
+                        return RightPrimaryButtonPressed;
                     }
                 }
                 else if (inputButton == ButtonTypes.Secondary)
                 {
                     if (hand == ControllerHand.Left)
                     {
-                        return XRCrossPlatformInputManager.Instance.LeftSecondaryButtonPressed;
+                        return LeftSecondaryButtonPressed;
                     }
                     else
                     {
-                        return XRCrossPlatformInputManager.Instance.RightSecondaryButtonPressed;
+                        return RightSecondaryButtonPressed;
                     }
                 }
             }
@@ -360,44 +360,44 @@ namespace EpicXRCrossPlatformInput
                 {
                     if (hand == ControllerHand.Left)
                     {
-                        return XRCrossPlatformInputManager.Instance.LeftGripDown;
+                        return LeftGripDown;
                     }
                     else
                     {
-                        return XRCrossPlatformInputManager.Instance.RightGripDown;
+                        return RightGripDown;
                     }
                 }
                 else if (inputButton == ButtonTypes.Trigger)
                 {
                     if (hand == ControllerHand.Left)
                     {
-                        return XRCrossPlatformInputManager.Instance.LeftTriggerDown;
+                        return LeftTriggerDown;
                     }
                     else
                     {
-                        return XRCrossPlatformInputManager.Instance.RightTriggerDown;
+                        return RightTriggerDown;
                     }
                 }
                 else if (inputButton == ButtonTypes.Primary)
                 {
                     if (hand == ControllerHand.Left)
                     {
-                        return XRCrossPlatformInputManager.Instance.LeftPrimaryButtonDown;
+                        return LeftPrimaryButtonDown;
                     }
                     else
                     {
-                        return XRCrossPlatformInputManager.Instance.RightPrimaryButtonDown;
+                        return RightPrimaryButtonDown;
                     }
                 }
                 else if (inputButton == ButtonTypes.Secondary)
                 {
                     if (hand == ControllerHand.Left)
                     {
-                        return XRCrossPlatformInputManager.Instance.LeftSecondaryButtonDown;
+                        return LeftSecondaryButtonDown;
                     }
                     else
                     {
-                        return XRCrossPlatformInputManager.Instance.RightSecondaryButtonDown;
+                        return RightSecondaryButtonDown;
                     }
                 }
             }

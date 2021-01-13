@@ -1185,6 +1185,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ControllerLayer: 12
+  IsGrabEnabled: 1
   HideControllerOnGrab: 1
   HoldToGrab: 0
   GrabButton: 0
@@ -1337,6 +1338,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ControllerLayer: 12
+  IsGrabEnabled: 1
   HideControllerOnGrab: 0
   HoldToGrab: 1
   GrabButton: 0
@@ -2572,6 +2574,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ControllerLayer: 12
+  IsGrabEnabled: 1
   HideControllerOnGrab: 0
   HoldToGrab: 1
   GrabButton: 0
@@ -2648,6 +2651,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ControllerLayer: 12
+  IsGrabEnabled: 1
   HideControllerOnGrab: 0
   HoldToGrab: 1
   GrabButton: 0
@@ -3067,6 +3071,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ControllerLayer: 12
+  IsGrabEnabled: 1
   HideControllerOnGrab: 1
   HoldToGrab: 0
   GrabButton: 0
@@ -4257,9 +4262,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ControllerLayer: 12
+  IsGrabEnabled: 1
   HideControllerOnGrab: 0
   HoldToGrab: 1
-  GrabButton: 0
+  GrabButton: 3
   SnapToController: 1
   SnapTonController2Hand: 0
   ThrowVelocityMultiplier: 1
@@ -4493,6 +4499,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ControllerLayer: 12
+  IsGrabEnabled: 1
   HideControllerOnGrab: 1
   HoldToGrab: 1
   GrabButton: 0
@@ -5289,6 +5296,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ControllerLayer: 12
+  IsGrabEnabled: 1
   HideControllerOnGrab: 0
   HoldToGrab: 1
   GrabButton: 3
@@ -5515,6 +5523,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ControllerLayer: 12
+  IsGrabEnabled: 1
   HideControllerOnGrab: 0
   HoldToGrab: 1
   GrabButton: 0
@@ -6022,6 +6031,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ControllerLayer: 12
+  IsGrabEnabled: 1
   HideControllerOnGrab: 0
   HoldToGrab: 1
   GrabButton: 0
@@ -6973,6 +6983,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ControllerLayer: 12
+  IsGrabEnabled: 1
   HideControllerOnGrab: 1
   HoldToGrab: 1
   GrabButton: 0
@@ -7232,9 +7243,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ControllerLayer: 12
+  IsGrabEnabled: 1
   HideControllerOnGrab: 0
   HoldToGrab: 1
-  GrabButton: 0
+  GrabButton: 3
   SnapToController: 1
   SnapTonController2Hand: 0
   ThrowVelocityMultiplier: 1
@@ -7588,9 +7600,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ControllerLayer: 12
+  IsGrabEnabled: 1
   HideControllerOnGrab: 0
   HoldToGrab: 1
-  GrabButton: 0
+  GrabButton: 3
   SnapToController: 1
   SnapTonController2Hand: 0
   ThrowVelocityMultiplier: 1
@@ -8472,6 +8485,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ControllerLayer: 12
+  IsGrabEnabled: 1
   HideControllerOnGrab: 0
   HoldToGrab: 1
   GrabButton: 0
@@ -9034,9 +9048,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ControllerLayer: 12
+  IsGrabEnabled: 1
   HideControllerOnGrab: 0
   HoldToGrab: 1
-  GrabButton: 0
+  GrabButton: 3
   SnapToController: 1
   SnapTonController2Hand: 0
   ThrowVelocityMultiplier: 1

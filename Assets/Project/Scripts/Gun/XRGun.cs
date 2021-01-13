@@ -374,18 +374,14 @@ namespace EpicXRCrossPlatformInput
                     {
                         grabScript = other.transform.GetComponentInParent<InteractableObject>();
                     }
-                    grabScript.IsGrabEnabled = false;
-                    grabScript.ReleaseGrab();
-                    StartCoroutine(WaitToDestroyGameObject(other.gameObject));
+
+
+                    grabScript.MurderThanDestroy();
                 }
             }
         }
 
-        private IEnumerator WaitToDestroyGameObject(GameObject objectToMurder)
-        {
-            yield return new WaitForEndOfFrame();
-            Destroy(objectToMurder);
-        }
+       
 
     }
 
