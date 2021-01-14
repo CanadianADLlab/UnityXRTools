@@ -2241,13 +2241,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29c00c492ee5a214ebb0e7127d622cb4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MagneticGrabInput: 1
   GrabIconPrefab: {fileID: 3447157069069369885, guid: 04e8963e6585f50439799c192bd3377c, type: 3}
   GrabDistance: 10
   GrabLayer:
     serializedVersion: 2
-    m_Bits: 1079
+    m_Bits: 4294967295
   SphereCastDirection: {x: 0, y: 0, z: 1}
   SphereCastRadius: 0.15
+  MinTractorBeamZ: 5
+  TractorBeamPrefab: {fileID: 5770727642634039761, guid: ecec9633ffa629244851029132c2861f, type: 3}
 --- !u!1 &356534430
 GameObject:
   m_ObjectHideFlags: 0
@@ -4588,6 +4591,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29c00c492ee5a214ebb0e7127d622cb4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MagneticGrabInput: 2
   GrabIconPrefab: {fileID: 3447157069069369885, guid: 04e8963e6585f50439799c192bd3377c, type: 3}
   GrabDistance: 10
   GrabLayer:
@@ -4595,6 +4599,8 @@ MonoBehaviour:
     m_Bits: 4294967295
   SphereCastDirection: {x: 0, y: 0, z: 1}
   SphereCastRadius: 0.15
+  MinTractorBeamZ: 5
+  TractorBeamPrefab: {fileID: 5770727642634039761, guid: ecec9633ffa629244851029132c2861f, type: 3}
 --- !u!120 &1063976344
 LineRenderer:
   m_ObjectHideFlags: 0
