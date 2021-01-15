@@ -12,8 +12,19 @@ namespace EpicXRCrossPlatformInput
         public Transform LeftHand;
         public Transform RightHand;
         public GameObject PlaySpace;
+        public GameObject CameraOffset;
         public GameObject Camera;
 
+
+        /// <summary>
+        /// Handles weird offset stuff when moving the cameras
+        /// </summary>
+        /// <param name="portal"></param>
+        public void SetRotation(Transform portal)
+        {
+            // The heigharchy of the player prefab goes CameraRig -> TrackingSpace -> MainCamera
+            CameraOffset.transform.eulerAngles = new Vector3(CameraOffset.transform.eulerAngles.x, portal.eulerAngles.y, CameraOffset.transform.eulerAngles.z);
+        }
         #region Singleton
         public static XRPositionManager Instance;
         private void Awake()

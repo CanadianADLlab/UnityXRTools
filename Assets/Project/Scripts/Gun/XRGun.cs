@@ -157,7 +157,6 @@ namespace EpicXRCrossPlatformInput
                 }
                 else if(emptyClipAudioAloudToPlay)
                 {
-                   
                     PlayEmptyClipAudio();
                 }
             }

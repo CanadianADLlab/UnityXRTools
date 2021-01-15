@@ -353,6 +353,17 @@ namespace EpicXRCrossPlatformInput
                         return RightSecondaryButtonPressed;
                     }
                 }
+                else if (inputButton == ButtonTypes.Stick)
+                {
+                    if (hand == ControllerHand.Left)
+                    {
+                        return LeftStickPressed;
+                    }
+                    else
+                    {
+                        return RightStickPressed;
+                    }
+                }
             }
             else
             {
@@ -400,6 +411,17 @@ namespace EpicXRCrossPlatformInput
                         return RightSecondaryButtonDown;
                     }
                 }
+                else if (inputButton == ButtonTypes.Stick)
+                {
+                    if (hand == ControllerHand.Left)
+                    {
+                        return LeftStickDown;
+                    }
+                    else
+                    {
+                        return RightStickDown;
+                    }
+                }
             }
 
 
@@ -432,8 +454,9 @@ namespace EpicXRCrossPlatformInput
     {
         Grip,
         Primary,
-        Secondary,
-        Trigger
+        Secondary, 
+        Trigger,
+        Stick
     }
 
 }

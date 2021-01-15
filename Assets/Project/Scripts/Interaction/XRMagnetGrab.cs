@@ -133,7 +133,6 @@ namespace EpicXRCrossPlatformInput
             }
             else
             {
-                print("Else");
                 objectToBeGrabbed = null;
                 ToggleHandIcon(false);
                 ResetBeam();
