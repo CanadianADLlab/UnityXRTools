@@ -80,7 +80,7 @@ namespace EpicXRCrossPlatformInput
 
         private void TeleportPlayer()
         {
-            if (teleportPressed)
+            if (stickDown && !teleportPressed) // Button up
             {
                 stickDown = false;
                 if (validTeleport)
