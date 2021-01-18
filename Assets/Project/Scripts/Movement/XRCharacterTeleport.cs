@@ -59,12 +59,14 @@ namespace EpicXRCrossPlatformInput
                 Debug.LogError("No Curved line points are attatched to this object " + transform.name);
             }
             lineRend = GetComponentInChildren<LineRenderer>();
-
             if (lineRend == null)
             {
                 Debug.LogError("No Curved line are attatched to this object " + transform.name);
             }
-
+            lineRend.startColor = ValidColor;
+            lineRend.endColor = ValidColor;
+            print("linerend  " + lineRend.name);
+                
         }
         public void Update()
         {
@@ -92,11 +94,11 @@ namespace EpicXRCrossPlatformInput
         }
 
 
+
         private void RaycastCurvedLine()
         {
             if (stickDown || teleportPressed) // On stick down we show the bezier
             {
-                print("Raycasting");
                 stickDown = true;
                 parabolaParent.SetActive(true);
                 RaycastHit hit;
@@ -108,7 +110,6 @@ namespace EpicXRCrossPlatformInput
                 else if (Physics.Raycast(transform.position + transform.TransformDirection(new Vector3(0, 0, MaxTeleportDistance))
                     , Vector3.down, out hit, Mathf.Infinity, TeleportRaycastLayers))
                 {
-
                     HandleTeleportHit(hit);
                 }
                 else
@@ -129,7 +130,6 @@ namespace EpicXRCrossPlatformInput
 
         private void HandleTeleportHit(RaycastHit hit)
         {
-            print("Do we ever get here");
             lineRend.startColor = ValidColor;
             lineRend.endColor = ValidColor;
             parabolas[0].position = transform.position; // The first point of the curve will always be this position

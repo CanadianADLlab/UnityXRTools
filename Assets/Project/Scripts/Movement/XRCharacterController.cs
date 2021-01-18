@@ -148,7 +148,7 @@ namespace EpicXRCrossPlatformInput
             targetPos = new Vector3(XRCrossPlatformInputManager.Instance.LeftStickAxis.x, XRCrossPlatformInputManager.Instance.LeftStickAxis.y, XRCrossPlatformInputManager.Instance.LeftStickAxis.y); // The if statement gets rid of drift
 
 
-            targetPos = followTransform.transform.TransformDirection(targetPos);
+            targetPos = XRPositionManager.Instance.Camera.transform.TransformDirection(targetPos); // forward of the camera
         }
         private void Move()
         {

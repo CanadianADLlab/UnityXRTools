@@ -17,11 +17,7 @@ public class CurvedLineRenderer : MonoBehaviour
 	private Vector3[] linePositions = new Vector3[0];
 	private Vector3[] linePositionsOld = new Vector3[0];
 
-    private void Start()
-    {
-        GetComponent<LineRenderer>().material = new Material(Shader.Find("Sprites/Default"));
-    }
-    // Update is called once per frame
+   
     public void Update () 
 	{
 		GetPoints();
