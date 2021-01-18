@@ -4520,6 +4520,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 47628059023848772, guid: 8b85558821195004fb492cb0859d76b1, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: a85560cba22f7ac4ba75de013760365d, type: 2}
+    - target: {fileID: 5181232812261408905, guid: 8b85558821195004fb492cb0859d76b1, type: 3}
+      propertyPath: TeleportArrowMat
+      value: 
+      objectReference: {fileID: 2100000, guid: a85560cba22f7ac4ba75de013760365d, type: 2}
+    - target: {fileID: 5181232813288650489, guid: 8b85558821195004fb492cb0859d76b1, type: 3}
+      propertyPath: TractorBeamPrefab
+      value: 
+      objectReference: {fileID: 5770727642634039761, guid: ecec9633ffa629244851029132c2861f, type: 3}
     - target: {fileID: 5181232813957122418, guid: 8b85558821195004fb492cb0859d76b1, type: 3}
       propertyPath: m_RootOrder
       value: 7
