@@ -11,22 +11,25 @@ namespace EpicXRCrossPlatformInput
     /// </summary>
     public class XRCharacterTeleport : MonoBehaviour
     {
+        [Header("Control options")]
         public ButtonTypes TeleportButton = ButtonTypes.Stick;
 
-
+        [Header("Line Renderer Settings")]
+        public Material TeleportArrowMat;
+        public LineRenderer LineRend;
         public Color ValidColor = Color.blue;
         public Color InvalidColor = Color.red;
 
 
-        public LayerMask TeleportRaycastLayers = ~0;
-
+        [Header("Teleport Settings ")]
         [Tooltip("The height of the arch from the controller")]
         public float YOffset = 1.0f;
         public float MaxTeleportDistance = 5.0f;
+        public LayerMask TeleportRaycastLayers = ~0;
+
 
 
         private Transform[] parabolas;
-        private LineRenderer lineRend;
         private GameObject parabolaParent;
         private bool validTeleport = false;
         private Vector3 validTeleportPosition;
@@ -58,14 +61,15 @@ namespace EpicXRCrossPlatformInput
             {
                 Debug.LogError("No Curved line points are attatched to this object " + transform.name);
             }
-            lineRend = GetComponentInChildren<LineRenderer>();
-            if (lineRend == null)
+            LineRend = GetComponentInChildren<LineRenderer>();
+            if (LineRend == null)
             {
                 Debug.LogError("No Curved line are attatched to this object " + transform.name);
             }
-            lineRend.startColor = ValidColor;
-            lineRend.endColor = ValidColor;
-            print("linerend  " + lineRend.name);
+            LineRend.startColor = ValidColor;
+            LineRend.endColor = ValidColor;
+            TeleportArrowMat.SetColor("_Color",ValidColor);
+            print("linerend  " + LineRend.name);
                 
         }
         public void Update()
@@ -88,7 +92,12 @@ namespace EpicXRCrossPlatformInput
                 if (validTeleport)
                 {
                     XRPositionManager.Instance.SetRotation(teleportPortal);
-                    XRPositionManager.Instance.CameraOffset.transform.position = new Vector3(validTeleportPosition.x, validTeleportPosition.y, validTeleportPosition.z);
+
+                    float yOffset = XRPositionManager.Instance.PlaySpace.transform.position.y - validTeleportPosition.y;
+
+                    Vector3 distanceFromCenterOffset = XRPositionManager.Instance.PlaySpace.transform.position - XRPositionManager.Instance.Camera.transform.position; // The distance the camera rig is to the centre of the room we will use this to make sure the teleport it centered 
+                    XRPositionManager.Instance.PlaySpace.transform.position = new Vector3(validTeleportPosition.x, validTeleportPosition.y, validTeleportPosition.z) + new Vector3(distanceFromCenterOffset.x, 0, distanceFromCenterOffset.z);
+
                 }
             }
         }
@@ -114,8 +123,10 @@ namespace EpicXRCrossPlatformInput
                 }
                 else
                 {
-                    lineRend.startColor = InvalidColor;
-                    lineRend.endColor = InvalidColor;
+                    LineRend.startColor = InvalidColor;
+                    LineRend.endColor = InvalidColor;
+                    TeleportArrowMat.SetColor("_Color", InvalidColor);
+
                     validTeleport = false;
                     validTeleportPosition = Vector3.zero;
                     parabolaParent.SetActive(false);
@@ -130,8 +141,10 @@ namespace EpicXRCrossPlatformInput
 
         private void HandleTeleportHit(RaycastHit hit)
         {
-            lineRend.startColor = ValidColor;
-            lineRend.endColor = ValidColor;
+            LineRend.startColor = ValidColor;
+            LineRend.endColor = ValidColor;
+            TeleportArrowMat.SetColor("_Color", ValidColor);
+
             parabolas[0].position = transform.position; // The first point of the curve will always be this position
 
             // Handeling the middle point of the curved beam
@@ -150,7 +163,6 @@ namespace EpicXRCrossPlatformInput
             if (hand == ControllerHand.Left)
             {
                 lookDirection = new Vector3(XRCrossPlatformInputManager.Instance.LeftStickAxis.x, 0, XRCrossPlatformInputManager.Instance.RightStickAxis.y);
-
             }
             else
             {

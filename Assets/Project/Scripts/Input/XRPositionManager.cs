@@ -22,9 +22,20 @@ namespace EpicXRCrossPlatformInput
         /// <param name="portal"></param>
         public void SetRotation(Transform portal)
         {
-            // The heigharchy of the player prefab goes CameraRig -> TrackingSpace -> MainCamera
-            CameraOffset.transform.eulerAngles = new Vector3(CameraOffset.transform.eulerAngles.x, portal.eulerAngles.y, CameraOffset.transform.eulerAngles.z);
+            // I wrote this code years ago, it works don't ask questions why it just does
+        
+            Transform trackingSpace = Camera.transform.parent;
+            Transform oldParent = trackingSpace.parent;
+
+            trackingSpace.parent = null;
+            PlaySpace.transform.eulerAngles = new Vector3(PlaySpace.transform.eulerAngles.x, Camera.transform.eulerAngles.y, PlaySpace.transform.eulerAngles.z);
+
+            trackingSpace.parent = oldParent;
+            PlaySpace.transform.eulerAngles = new Vector3(PlaySpace.transform.eulerAngles.x, portal.eulerAngles.y, PlaySpace.transform.eulerAngles.z);
         }
+
+      
+
         #region Singleton
         public static XRPositionManager Instance;
         private void Awake()

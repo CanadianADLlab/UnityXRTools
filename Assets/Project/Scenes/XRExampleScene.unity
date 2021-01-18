@@ -4520,14 +4520,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 5181232813204439288, guid: 8b85558821195004fb492cb0859d76b1, type: 3}
-      propertyPath: m_Materials.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5181232813204439288, guid: 8b85558821195004fb492cb0859d76b1, type: 3}
-      propertyPath: m_Materials.Array.data[0]
+    - target: {fileID: 5181232812261408905, guid: 8b85558821195004fb492cb0859d76b1, type: 3}
+      propertyPath: TeleportArrowMat
       value: 
-      objectReference: {fileID: 2100000, guid: 684f4e877fb683347814333bc62df41d, type: 2}
+      objectReference: {fileID: 2100000, guid: a85560cba22f7ac4ba75de013760365d, type: 2}
     - target: {fileID: 5181232813957122418, guid: 8b85558821195004fb492cb0859d76b1, type: 3}
       propertyPath: m_RootOrder
       value: 7
