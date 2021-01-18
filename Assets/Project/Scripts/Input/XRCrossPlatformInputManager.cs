@@ -47,6 +47,11 @@ namespace EpicXRCrossPlatformInput
         public bool RightTriggerDown = false;
 
         [HideInInspector]
+        public bool LeftTriggerUp = false;
+        [HideInInspector]
+        public bool RightTriggerUp = false;
+
+        [HideInInspector]
         public bool LeftGripPressed = false;
         [HideInInspector]
         public bool RightGripPressed = false;
@@ -55,6 +60,11 @@ namespace EpicXRCrossPlatformInput
         public bool LeftGripDown = false;
         [HideInInspector]
         public bool RightGripDown = false;
+
+        [HideInInspector]
+        public bool LeftGripUp = false;
+        [HideInInspector]
+        public bool RightGripUp = false;
 
 
         [HideInInspector]
@@ -77,6 +87,17 @@ namespace EpicXRCrossPlatformInput
         [HideInInspector]
         public bool RightSecondaryButtonDown = false;
 
+
+        [HideInInspector]
+        public bool LeftPrimaryButtonUp = false;
+        [HideInInspector]
+        public bool RightPrimaryButtonUp = false;
+
+        [HideInInspector]
+        public bool LeftSecondaryButtonUp = false;
+        [HideInInspector]
+        public bool RightSecondaryButtonUp = false;
+
         [HideInInspector]
         public bool LeftMenuButtonDown = false;
         [HideInInspector]
@@ -88,6 +109,11 @@ namespace EpicXRCrossPlatformInput
         public bool RightMenuButtonPressed = false;
 
         [HideInInspector]
+        public bool LeftMenuButtonUp = false;
+        [HideInInspector]
+        public bool RightMenuButtonUp = false;
+
+        [HideInInspector]
         public bool LeftStickDown = false;
         [HideInInspector]
         public bool RightStickDown = false;
@@ -97,10 +123,15 @@ namespace EpicXRCrossPlatformInput
         [HideInInspector]
         public bool RightStickPressed = false;
 
+        [HideInInspector]
+        public bool LeftStickUp = false;
+        [HideInInspector]
+        public bool RightStickUp = false;
+
         // public vectors
         [HideInInspector]
         public Vector2 LeftStickAxis;
-        [HideInInspector] 
+        [HideInInspector]
         public Vector2 RightStickAxis;
 
 
@@ -130,6 +161,8 @@ namespace EpicXRCrossPlatformInput
 
         private void GetTriggerInput()
         {
+
+
             leftTriggerWasPressed = LeftTriggerPressed; // Check before input so its the value last frame
             rightTriggerWasPressed = RightTriggerPressed; // Check before input so its the value last frame
             leftHandDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.triggerButton, out LeftTriggerPressed);
@@ -144,6 +177,13 @@ namespace EpicXRCrossPlatformInput
                 LeftTriggerDown = true;
             }
 
+            if (!LeftTriggerPressed && leftTriggerWasPressed)
+            {
+                LeftTriggerUp = true;
+            }
+
+
+
             if (RightTriggerPressed)
             {
                 RightTriggerDown = false;
@@ -151,6 +191,11 @@ namespace EpicXRCrossPlatformInput
             if (RightTriggerPressed && !rightTriggerWasPressed)
             {
                 RightTriggerDown = true;
+            }
+
+            if (!RightTriggerPressed && rightTriggerWasPressed)
+            {
+                RightTriggerUp = true;
             }
         }
 
@@ -162,6 +207,11 @@ namespace EpicXRCrossPlatformInput
             leftHandDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.gripButton, out LeftGripPressed);
             rightHandDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.gripButton, out RightGripPressed);
 
+
+            if (!LeftGripPressed && leftGripWasPressed)
+            {
+                LeftGripUp = true;
+            }
             if (LeftGripPressed)
             {
                 LeftGripDown = false;
@@ -169,6 +219,11 @@ namespace EpicXRCrossPlatformInput
             if (LeftGripPressed && !leftGripWasPressed)
             {
                 LeftGripDown = true;
+            }
+
+            if (!RightGripPressed && rightGripWasPressed)
+            {
+                RightGripUp = true;
             }
 
             if (RightGripPressed)
@@ -197,6 +252,11 @@ namespace EpicXRCrossPlatformInput
             leftHandDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primaryButton, out LeftPrimaryButtonPressed);
             rightHandDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primaryButton, out RightPrimaryButtonPressed);
 
+
+            if (!LeftPrimaryButtonPressed && leftPrimaryButtonWasPressed)
+            {
+                LeftPrimaryButtonUp = true;
+            }
             if (LeftPrimaryButtonPressed)
             {
                 LeftPrimaryButtonDown = false;
@@ -204,6 +264,11 @@ namespace EpicXRCrossPlatformInput
             if (LeftPrimaryButtonPressed && !leftPrimaryButtonWasPressed)
             {
                 LeftPrimaryButtonDown = true;
+            }
+
+            if (!RightPrimaryButtonPressed && rightPrimaryButtonWasPressed)
+            {
+                RightPrimaryButtonUp = true;
             }
 
             if (RightPrimaryButtonPressed)
@@ -227,6 +292,10 @@ namespace EpicXRCrossPlatformInput
             rightHandDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.secondaryButton, out RightSecondaryButtonPressed);
 
 
+            if (!LeftSecondaryButtonPressed && leftSecondaryButtonWasPressed)
+            {
+                LeftSecondaryButtonUp = true;
+            }
             if (LeftSecondaryButtonPressed)
             {
                 LeftSecondaryButtonDown = false;
@@ -236,6 +305,10 @@ namespace EpicXRCrossPlatformInput
                 LeftSecondaryButtonDown = true;
             }
 
+            if (!RightSecondaryButtonPressed && rightSecondaryButtonWasPressed)
+            {
+                RightSecondaryButtonUp = true;
+            }
             if (RightSecondaryButtonPressed)
             {
                 RightSecondaryButtonDown = false;
@@ -257,6 +330,11 @@ namespace EpicXRCrossPlatformInput
             leftHandDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.menuButton, out LeftMenuButtonPressed);
             rightHandDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.menuButton, out RightMenuButtonPressed);
 
+
+            if (!LeftMenuButtonPressed && leftMenuButtonWasPressed)
+            {
+                LeftMenuButtonUp = true;
+            }
             if (LeftMenuButtonPressed)
             {
                 LeftMenuButtonDown = false;
@@ -266,6 +344,10 @@ namespace EpicXRCrossPlatformInput
                 LeftMenuButtonDown = true;
             }
 
+            if (!RightMenuButtonPressed && rightMenuButtonWasPressed)
+            {
+                RightMenuButtonUp = true;
+            }
             if (RightMenuButtonPressed)
             {
                 RightMenuButtonDown = false;
@@ -286,6 +368,10 @@ namespace EpicXRCrossPlatformInput
             leftHandDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primary2DAxisClick, out LeftStickPressed);
             rightHandDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primary2DAxisClick, out RightStickPressed);
 
+            if (!LeftStickPressed && leftStickWasPressed)
+            {
+                LeftStickUp = true;
+            }
             if (LeftStickPressed)
             {
                 LeftStickDown = false;
@@ -295,6 +381,11 @@ namespace EpicXRCrossPlatformInput
                 LeftStickDown = true;
             }
 
+
+            if (!RightStickPressed && rightStickWasPressed)
+            {
+                RightStickUp = true;
+            }
             if (RightStickPressed)
             {
                 RightStickDown = false;
@@ -305,7 +396,9 @@ namespace EpicXRCrossPlatformInput
             }
         }
 
-        public bool GetInputByButton(ButtonTypes inputButton, ControllerHand hand, bool hold)
+
+        
+        public bool GetInputByButton(ButtonTypes inputButton, ControllerHand hand, bool hold) // maybe this should be a switch ?!?
         {
             if (hold)
             {
@@ -428,6 +521,77 @@ namespace EpicXRCrossPlatformInput
             return false;
         }
 
+
+
+
+        /// <summary>
+        /// Input up is used less often I find so it gets its own function 
+        /// </summary>
+        /// <param name="inputButton"></param>
+        /// <param name="hand"></param>
+        /// <returns></returns>
+        public bool GetInputUp(ButtonTypes inputButton, ControllerHand hand)
+        {
+
+            if (inputButton == ButtonTypes.Grip)
+            {
+                if (hand == ControllerHand.Left)
+                {
+                    return LeftGripUp;
+                }
+                else
+                {
+                    return RightGripUp;
+                }
+            }
+            else if (inputButton == ButtonTypes.Trigger)
+            {
+                if (hand == ControllerHand.Left)
+                {
+                    return LeftTriggerUp;
+                }
+                else
+                {
+                    return RightTriggerUp;
+                }
+            }
+            else if (inputButton == ButtonTypes.Primary)
+            {
+                if (hand == ControllerHand.Left)
+                {
+                    return LeftPrimaryButtonUp;
+                }
+                else
+                {
+                    return RightPrimaryButtonUp;
+                }
+            }
+            else if (inputButton == ButtonTypes.Secondary)
+            {
+                if (hand == ControllerHand.Left)
+                {
+                    return LeftSecondaryButtonUp;
+                }
+                else
+                {
+                    return RightSecondaryButtonUp;
+                }
+            }
+            else if (inputButton == ButtonTypes.Stick)
+            {
+                if (hand == ControllerHand.Left)
+                {
+                    return LeftStickUp;
+                }
+                else
+                {
+                    return RightStickUp;
+                }
+            }
+
+            return false;
+        }
+
         #region singleton
 
         public static XRCrossPlatformInputManager Instance;
@@ -454,7 +618,7 @@ namespace EpicXRCrossPlatformInput
     {
         Grip,
         Primary,
-        Secondary, 
+        Secondary,
         Trigger,
         Stick
     }
