@@ -68,7 +68,7 @@ namespace EpicXRCrossPlatformInput
             }
             LineRend.startColor = ValidColor;
             LineRend.endColor = ValidColor;
-            TeleportArrowMat.SetColor("_Color",ValidColor);
+            TeleportArrowMat.SetColor("_BaseColor", ValidColor);
             print("linerend  " + LineRend.name);
                 
         }
@@ -125,7 +125,7 @@ namespace EpicXRCrossPlatformInput
                 {
                     LineRend.startColor = InvalidColor;
                     LineRend.endColor = InvalidColor;
-                    TeleportArrowMat.SetColor("_Color", InvalidColor);
+                    TeleportArrowMat.SetColor("_BaseColor", InvalidColor);
 
                     validTeleport = false;
                     validTeleportPosition = Vector3.zero;
@@ -143,7 +143,7 @@ namespace EpicXRCrossPlatformInput
         {
             LineRend.startColor = ValidColor;
             LineRend.endColor = ValidColor;
-            TeleportArrowMat.SetColor("_Color", ValidColor);
+            TeleportArrowMat.SetColor("_BaseColor", ValidColor);
 
             parabolas[0].position = transform.position; // The first point of the curve will always be this position
 
