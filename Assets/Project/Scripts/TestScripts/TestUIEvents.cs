@@ -8,4 +8,9 @@ public class TestUIEvents : MonoBehaviour
    {
         print("Wow I've been clicked good job :)");
    }
+
+    public void ToggleValueChanged()
+    {
+        print("TOGGLE TOGGLE TOGGLE TOGGLE TOGGLE TOGGLE TOGGLE TOGGLETOGGLE TOGGLE TOGGLE TOGGLETOGGLE TOGGLE TOGGLE TOGGLETOGGLE TOGGLE TOGGLE TOGGLETOGGLE TOGGLE TOGGLE TOGGLE");
+    }
 }

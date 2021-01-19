@@ -26,9 +26,11 @@ namespace EpicXRCrossPlatformInput{
         private bool wasPointingAtLocation = false;
         private Transform hitElement;
 
-        // Button related stuff
+        // UI element state  related stuff
 
         private bool isButtonSelected = false;
+        private bool isToggleSelected = false;
+        private bool isSliderSelected = false;
 
 
         private void Start()
@@ -75,7 +77,7 @@ namespace EpicXRCrossPlatformInput{
                 pointer.transform.localPosition = new Vector3(0, 0, pointer.transform.localScale.z / 2);
 
                 hitElement = hit.transform;
-                HandleButtonRaycast(hitElement);
+                HandleButtonRaycast(hit);
                 wasPointingAtLocation = true;
             }
             else
@@ -89,8 +91,9 @@ namespace EpicXRCrossPlatformInput{
         /// <summary>
         /// Handles raycasting specifically buttons
         /// </summary>
-        private void HandleButtonRaycast(Transform hitUI)
+        private void HandleButtonRaycast(RaycastHit hit )
         {
+            Transform hitUI = hit.transform;
             if (hitUI.GetComponent<Button>())
             {
                 Button button = hitUI.GetComponent<Button>();
@@ -110,6 +113,47 @@ namespace EpicXRCrossPlatformInput{
                 {
                     button.onClick.Invoke(); // Boom we clicked the button
                 }
+            }
+            else if(hitUI.GetComponent<Toggle>())
+            {
+                Toggle toggle = hitUI.GetComponent<Toggle>();
+                if (inputPressed)
+                {
+                    EventSystem.current.SetSelectedGameObject(null);
+                    isToggleSelected = false;
+                }
+                else if (!isButtonSelected)
+                {
+                    toggle.Select();
+                    isToggleSelected = true;
+                }
+
+                if (inputUp)
+                {
+                    toggle.isOn = !toggle.isOn;
+                }
+            }
+            else if (hitUI.GetComponent<Slider>())
+            {
+                Slider slider = hitUI.GetComponent<Slider>();
+                if (inputPressed)
+                {
+                    RectTransform rectTransform = slider.transform.GetComponent<RectTransform>();
+                    float width = rectTransform.rect.width;
+                    EventSystem.current.SetSelectedGameObject(null);
+                    isSliderSelected = false;
+                    Vector3 newSliderValue = slider.transform.InverseTransformPoint(hit.point);
+                    float maxValue = (width / 2);
+                    float minValue = (maxValue) * -1;
+                    float value = Mathf.InverseLerp(minValue,maxValue,newSliderValue.x);
+                    slider.value = value;
+                }
+                else if (!isButtonSelected)
+                {
+                    slider.Select();
+                    isSliderSelected = true;
+                }
+              
             }
         }
         private void TurnOffBeam()
