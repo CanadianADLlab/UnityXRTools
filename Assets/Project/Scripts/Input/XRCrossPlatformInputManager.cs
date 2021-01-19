@@ -161,8 +161,6 @@ namespace EpicXRCrossPlatformInput
 
         private void GetTriggerInput()
         {
-
-
             leftTriggerWasPressed = LeftTriggerPressed; // Check before input so its the value last frame
             rightTriggerWasPressed = RightTriggerPressed; // Check before input so its the value last frame
             leftHandDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.triggerButton, out LeftTriggerPressed);
@@ -181,6 +179,10 @@ namespace EpicXRCrossPlatformInput
             {
                 LeftTriggerUp = true;
             }
+            else
+            {
+                LeftTriggerUp = false;
+            }
 
 
 
@@ -197,6 +199,10 @@ namespace EpicXRCrossPlatformInput
             {
                 RightTriggerUp = true;
             }
+            else
+            {
+                RightTriggerUp = false;
+            }
         }
 
 
@@ -208,10 +214,7 @@ namespace EpicXRCrossPlatformInput
             rightHandDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.gripButton, out RightGripPressed);
 
 
-            if (!LeftGripPressed && leftGripWasPressed)
-            {
-                LeftGripUp = true;
-            }
+
             if (LeftGripPressed)
             {
                 LeftGripDown = false;
@@ -221,10 +224,16 @@ namespace EpicXRCrossPlatformInput
                 LeftGripDown = true;
             }
 
-            if (!RightGripPressed && rightGripWasPressed)
+            if (!LeftGripPressed && leftGripWasPressed)
             {
-                RightGripUp = true;
+                LeftGripUp = true;
             }
+            else
+            {
+                LeftGripUp = false;
+            }
+
+         
 
             if (RightGripPressed)
             {
@@ -233,6 +242,17 @@ namespace EpicXRCrossPlatformInput
             if (RightGripPressed && !rightGripWasPressed)
             {
                 RightGripDown = true;
+            }
+
+
+
+            if (!RightGripPressed && rightGripWasPressed)
+            {
+                RightGripUp = true;
+            }
+            else
+            {
+                RightGripUp = false;
             }
         }
 
@@ -253,10 +273,7 @@ namespace EpicXRCrossPlatformInput
             rightHandDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primaryButton, out RightPrimaryButtonPressed);
 
 
-            if (!LeftPrimaryButtonPressed && leftPrimaryButtonWasPressed)
-            {
-                LeftPrimaryButtonUp = true;
-            }
+          
             if (LeftPrimaryButtonPressed)
             {
                 LeftPrimaryButtonDown = false;
@@ -266,10 +283,17 @@ namespace EpicXRCrossPlatformInput
                 LeftPrimaryButtonDown = true;
             }
 
-            if (!RightPrimaryButtonPressed && rightPrimaryButtonWasPressed)
+
+            if (!LeftPrimaryButtonPressed && leftPrimaryButtonWasPressed)
             {
-                RightPrimaryButtonUp = true;
+                LeftPrimaryButtonUp = true;
             }
+            else
+            {
+                LeftPrimaryButtonUp = false;
+            }
+
+
 
             if (RightPrimaryButtonPressed)
             {
@@ -278,6 +302,17 @@ namespace EpicXRCrossPlatformInput
             if (RightPrimaryButtonPressed && !rightPrimaryButtonWasPressed)
             {
                 RightPrimaryButtonDown = true;
+            }
+
+
+
+            if (!RightPrimaryButtonPressed && rightPrimaryButtonWasPressed)
+            {
+                RightPrimaryButtonUp = true;
+            }
+            else
+            {
+                RightPrimaryButtonUp = false;
             }
         }
 
@@ -292,10 +327,7 @@ namespace EpicXRCrossPlatformInput
             rightHandDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.secondaryButton, out RightSecondaryButtonPressed);
 
 
-            if (!LeftSecondaryButtonPressed && leftSecondaryButtonWasPressed)
-            {
-                LeftSecondaryButtonUp = true;
-            }
+          
             if (LeftSecondaryButtonPressed)
             {
                 LeftSecondaryButtonDown = false;
@@ -305,10 +337,16 @@ namespace EpicXRCrossPlatformInput
                 LeftSecondaryButtonDown = true;
             }
 
-            if (!RightSecondaryButtonPressed && rightSecondaryButtonWasPressed)
+            if (!LeftSecondaryButtonPressed && leftSecondaryButtonWasPressed)
             {
-                RightSecondaryButtonUp = true;
+                LeftSecondaryButtonUp = true;
             }
+            else
+            {
+                LeftSecondaryButtonUp = false;
+            }
+
+          
             if (RightSecondaryButtonPressed)
             {
                 RightSecondaryButtonDown = false;
@@ -316,6 +354,15 @@ namespace EpicXRCrossPlatformInput
             if (RightSecondaryButtonPressed && !rightSecondaryButtonWasPressed)
             {
                 RightSecondaryButtonDown = true;
+            }
+
+            if (!RightSecondaryButtonPressed && rightSecondaryButtonWasPressed)
+            {
+                RightSecondaryButtonUp = true;
+            }
+            else
+            {
+                RightSecondaryButtonUp = false;
             }
         }
 
@@ -331,10 +378,6 @@ namespace EpicXRCrossPlatformInput
             rightHandDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.menuButton, out RightMenuButtonPressed);
 
 
-            if (!LeftMenuButtonPressed && leftMenuButtonWasPressed)
-            {
-                LeftMenuButtonUp = true;
-            }
             if (LeftMenuButtonPressed)
             {
                 LeftMenuButtonDown = false;
@@ -344,10 +387,16 @@ namespace EpicXRCrossPlatformInput
                 LeftMenuButtonDown = true;
             }
 
-            if (!RightMenuButtonPressed && rightMenuButtonWasPressed)
+
+            if (!LeftMenuButtonPressed && leftMenuButtonWasPressed)
             {
-                RightMenuButtonUp = true;
+                LeftMenuButtonUp = true;
             }
+            else
+            {
+                LeftMenuButtonUp = false;
+            }
+
             if (RightMenuButtonPressed)
             {
                 RightMenuButtonDown = false;
@@ -355,6 +404,16 @@ namespace EpicXRCrossPlatformInput
             if (RightMenuButtonPressed && !rightMenuButtonWasPressed)
             {
                 RightMenuButtonDown = true;
+            }
+
+
+            if (!RightMenuButtonPressed && rightMenuButtonWasPressed)
+            {
+                RightMenuButtonUp = true;
+            }
+            else
+            {
+                RightMenuButtonUp = false;
             }
         }
 
@@ -368,10 +427,7 @@ namespace EpicXRCrossPlatformInput
             leftHandDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primary2DAxisClick, out LeftStickPressed);
             rightHandDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primary2DAxisClick, out RightStickPressed);
 
-            if (!LeftStickPressed && leftStickWasPressed)
-            {
-                LeftStickUp = true;
-            }
+          
             if (LeftStickPressed)
             {
                 LeftStickDown = false;
@@ -381,11 +437,17 @@ namespace EpicXRCrossPlatformInput
                 LeftStickDown = true;
             }
 
-
-            if (!RightStickPressed && rightStickWasPressed)
+            if (!LeftStickPressed && leftStickWasPressed)
             {
-                RightStickUp = true;
+                LeftStickUp = true;
             }
+            else
+            {
+                LeftStickUp = false;
+            }
+
+
+          
             if (RightStickPressed)
             {
                 RightStickDown = false;
@@ -393,6 +455,15 @@ namespace EpicXRCrossPlatformInput
             if (RightStickPressed && !rightStickWasPressed)
             {
                 RightStickDown = true;
+            }
+
+            if (!RightStickPressed && rightStickWasPressed)
+            {
+                RightStickUp = true;
+            }
+            else
+            {
+                RightStickUp = false;
             }
         }
 
