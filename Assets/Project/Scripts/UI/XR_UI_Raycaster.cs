@@ -31,6 +31,7 @@ namespace EpicXRCrossPlatformInput{
         private bool isButtonSelected = false;
         private bool isToggleSelected = false;
         private bool isSliderSelected = false;
+        private bool isScrollBarSelected = false;
 
 
         private void Start()
@@ -153,7 +154,65 @@ namespace EpicXRCrossPlatformInput{
                     slider.Select();
                     isSliderSelected = true;
                 }
-              
+            }
+            else if (hitUI.GetComponent<Scrollbar>())
+            {
+                Scrollbar scrollbar = hitUI.GetComponent<Scrollbar>();
+                if (inputPressed)
+                {
+                    RectTransform rectTransform = scrollbar.transform.GetComponent<RectTransform>();
+                    EventSystem.current.SetSelectedGameObject(null);
+                    isScrollBarSelected = false;
+                    Vector3 newScrollbarValue = scrollbar.transform.InverseTransformPoint(hit.point);
+
+                    float value = 0;
+                    if (scrollbar.direction == Scrollbar.Direction.LeftToRight )
+                    {
+                        float width = rectTransform.rect.width;
+                        float maxValue = (width / 2);
+                        float minValue = (maxValue) * -1;
+                        value = Mathf.InverseLerp(minValue, maxValue, newScrollbarValue.x);
+                    }
+                    else if(scrollbar.direction == Scrollbar.Direction.RightToLeft)
+                    {
+                        float width = rectTransform.rect.width;
+                        float maxValue = (width / 2);
+                        float minValue = (maxValue) * -1;
+                        value = Mathf.InverseLerp(maxValue,minValue , newScrollbarValue.x);
+                    }
+                    else if (scrollbar.direction == Scrollbar.Direction.TopToBottom)
+                    {
+                        float height = rectTransform.rect.height;
+                        float maxValue = (height / 2);
+                        float minValue = (maxValue) * -1;
+                        value = Mathf.InverseLerp(maxValue, minValue, newScrollbarValue.y);
+
+                    }
+                    else if (scrollbar.direction == Scrollbar.Direction.BottomToTop)
+                    {
+                        float height = rectTransform.rect.height;
+                        float maxValue = (height / 2);
+                        float minValue = (maxValue) * -1;
+                        value = Mathf.InverseLerp(minValue, maxValue, newScrollbarValue.y);
+
+                    }
+
+                    if (hitUI.GetComponentInParent<ScrollRect>())
+                    {
+                        float height = rectTransform.rect.height;
+                        float maxValue = 0;
+                        float minValue = (height) * -1;
+                        value = Mathf.InverseLerp(minValue, maxValue, newScrollbarValue.y);
+                    }
+               
+                    scrollbar.value = value;
+                }
+                else if (!isButtonSelected)
+                {
+                    scrollbar.Select();
+                    isScrollBarSelected = true;
+                }
+
             }
         }
         private void TurnOffBeam()
