@@ -52,8 +52,8 @@ namespace EpicXRCrossPlatformInput
         private bool ignoringRightHand = false;
         // Position
         private Vector3 targetPos;
-        private EpicXRCrossPlatformInput.Controller leftController;
-        private EpicXRCrossPlatformInput.Controller rightController;
+        private Controller leftController;
+        private Controller rightController;
 
         #endregion
 
@@ -75,6 +75,7 @@ namespace EpicXRCrossPlatformInput
 
         private void Update()
         {
+            HandleFollowTransform();
             HandleVRMovement();
             GroundChecker();
             GetMoveInput();
@@ -148,7 +149,7 @@ namespace EpicXRCrossPlatformInput
             targetPos = new Vector3(XRCrossPlatformInputManager.Instance.LeftStickAxis.x, XRCrossPlatformInputManager.Instance.LeftStickAxis.y, XRCrossPlatformInputManager.Instance.LeftStickAxis.y); // The if statement gets rid of drift
 
 
-            targetPos = XRPositionManager.Instance.Camera.transform.TransformDirection(targetPos); // forward of the camera
+            targetPos = followTransform.transform.TransformDirection(targetPos);
         }
         private void Move()
         {
@@ -263,6 +264,18 @@ namespace EpicXRCrossPlatformInput
             }
         }
 
+
+        /// <summary>
+        /// we use the follow transform for moving the player in the correct direction, this is needed so player moves at the same speed while looking up
+        /// </summary>
+        private void HandleFollowTransform()
+        {
+            followTransform.position = VrCamera.transform.position;
+            followTransform.localEulerAngles = new Vector3(0, VrCamera.transform.localEulerAngles.y, 0);
+        }
+
     }
+  
+
 }
 

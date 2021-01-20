@@ -134,9 +134,9 @@ namespace EpicXRCrossPlatformInput{
                     toggle.isOn = !toggle.isOn;
                 }
             }
-            else if (hitUI.GetComponent<Slider>())
+            else if (hitUI.GetComponent<UnityEngine.UI.Slider>())
             {
-                Slider slider = hitUI.GetComponent<Slider>();
+                UnityEngine.UI.Slider slider = hitUI.GetComponent<UnityEngine.UI.Slider>();
                 if (inputPressed)
                 {
                     RectTransform rectTransform = slider.transform.GetComponent<RectTransform>();

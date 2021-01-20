@@ -689,6 +689,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 32
   UIInteractionButton: 3
+  PointerPrefab: {fileID: 5770727642634039761, guid: ecec9633ffa629244851029132c2861f, type: 3}
 --- !u!1 &3597777456550911947
 GameObject:
   m_ObjectHideFlags: 0

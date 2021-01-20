@@ -337,7 +337,7 @@ namespace EpicXRCrossPlatformInput
                     clipHasRounds = false;
                     GameObject fallingClip = GameObject.Instantiate(ClipPrefab);
                     fallingClip.transform.parent = ClipInGun.transform.parent;
-                    fallingClip.transform.localScale = ClipInGun.transform.localScale;
+              //      fallingClip.transform.localScale = ClipInGun.transform.localScale;
                     fallingClip.transform.rotation = ClipInGun.transform.rotation;
                     fallingClip.transform.position = ClipInGun.transform.position;
                     fallingClip.transform.parent = null;
