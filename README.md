@@ -1,5 +1,5 @@
 
-Unity Version : 2020.1.17f1
+Unity Version: 2020.1.17f1
 
 This project contains various tools for VR interactions using the Unity XR plugin.
 
@@ -17,7 +17,7 @@ Tools contained
 Project Setup
 
 I recommend using a unity version that is the same or newer than the unity version listed above. It will most likely work with older versions that unity xr is supported by, 
-but just to be safe. Also before using the xr samples for your own project I recommend trying out the test scenes which I explain below.
+but just to be safe. Also, before using the xr samples for your own project I recommend trying out the test scenes which I explain below.
 Once you have the project open all of the sample interactions created will be located under the Project folder.
 <br><br>
 <img width="828" alt="In this folder" src="https://user-images.githubusercontent.com/46603511/105355759-92392880-5bc0-11eb-9de1-e5d685246e28.png">
@@ -36,7 +36,7 @@ The scene lets players control a drone in different ways using dials levers and 
 <br><br>
 
 An overview of the scripts
-I'm gonna break down the scripts here and explain all the variables that you can change via the inspector.
+I'm going to break down the scripts here and explain all the variables that you can change via the inspector.
 
 <h1>Input</h1>
 
@@ -55,8 +55,8 @@ This behavces the same as the first function but only return input up, I found I
 <br>
 <h3>XRPositionManager</h3>
 Singleton script just keeps track of all the vr specific objects like hands,camera and playspace. Useful for checking states an example use would be seeing if the leftcontroller was grabbing. XRPositionManager.Instance.LeftController.GetComponent<Controller>().IsGrabbing
-<h3>Controller<h3>
-Controller just handles states of the controller. This script is attatched to both the left and right controllers on the character prefabs.
+<h3>Controller</h3>
+Controller just handles states of the controller. This script is attached to both the left and right controllers on the character prefabs.
   <br>
   public vars
   <br>
@@ -85,7 +85,7 @@ Controller just handles states of the controller. This script is attatched to bo
    <br>
    Camera VRCamera -> The vr vamera
    <br>
-   Transform PlayerCollider -> the transform that contains the player collider
+   Transform PlayerCollider -> The transform that contains the player collider
    <br>
    
   <h3>XRCharacterTeleport</h3>
@@ -115,7 +115,7 @@ Controller just handles states of the controller. This script is attatched to bo
 
 <h3>InteractableObject</h3>
 
-This script enables objects to be grabbed. Attatch to any object with a collider and a rigidbody to enable grabbing.
+This script enables objects to be grabbed. Attach to any object with a collider and a rigid body to enable grabbing.
 <br>
 Public var descriptions
 <br>
@@ -133,19 +133,19 @@ bool SnapToController -> Snaps center point of object to controller on grab
 <br>
 bool SnapTonController2Hand -> does the same thing but for the second hand
 <br>
-float ThrowVelocityMultiplier -> the multiplier of the velocity when you release by default its set to 1 if you wan't throwing to feel more powerful increase the number.
+float ThrowVelocityMultiplier -> the multiplier of the velocity when you release by default its set to 1 if you want throwing to feel more powerful increase the number.
 <br>
-float ThrowTorqueMultiplier ->  the same thing but for torque
+float ThrowTorqueMultiplier -> the same thing but for torque
 
 <h3>InteractableSecondaryGrab</h3>
-This scripts makes the object look at secondary hand when grabbed. To use attatch to any object that has InteractableObject attatched.
+This script makes the object look at secondary hand when grabbed. To use attach to any object that has InteractableObject attached.
 <br>
 Public var descriptions
 <br>
 bool ReverseGrabLook -> just makes the object look in the other direction if true.
 
 <h3>XRInteractableHands</h3>
-This scripts enables a hand on a object when grabbed, used to give the illusion that the users hands are holding something. Attatch to a object with InteractableObject.
+This scripts enables a hand on a object when grabbed, used to give the illusion that the users hands are holding something. Attach to a object with InteractableObject.
 <br>
 Public var descriptions
 <br>
@@ -153,7 +153,7 @@ GameObejct LeftHandMesh -> the mesh of the left hand that will be turned on. In 
 <br>
 GameObejct Right -> the mesh of the right hand that will be turned on. In the example scenes the hand is set up to be holding the object in the scene.
 <br>
-bool IsTwoHands -> if theres a secondary grab enable this lets you attatch to more hands for the secondary attatch
+bool IsTwoHands -> if there’s a secondary grab enable this lets you attach to more hands for the secondary attach
 <br>
 GameObject SecondaryLeftHandMesh -> secondary mesh that gets enabled upon grabbing left
 <br>
@@ -190,7 +190,7 @@ Public vars
 <br>
 ButtonTypes ShootButton -> The fire button 
 <br>
-bool IsReloadingEnabled -> Whether or not the gun needs to reload, if false the gun will never run out of ammo
+bool IsReloadingEnabled -> Whether the gun needs to reload, if false the gun will never run out of ammo
 <br>
 int ClipSize -> if InfiniteAmmo is false this is how many bullets you can shoot before requiring a reload
 <br>
@@ -234,7 +234,7 @@ GameObject ClipPrefab -> The prefab of the clip to spawn when reloading
 <h1>UI</h1>
 
 <h3>XR_UI_Raycaster</h3>
-Scripts attatchs to a controller handles raycasting and interacting with ui elements. NOTE for it to find a ui element it needs a collider attatched to it.
+Scripts attaches to a controller handles raycasting and interacting with ui elements. NOTE for it to find a ui element it needs a collider attached to it.
 <br>
 Public vars
 <br>
@@ -258,7 +258,7 @@ Public vars
  ButtonTypes ClimbButton -> The button the player uses to climb
 <br>
 <h3> Ladder_Rung </h3>
-Attatched to a child of the ladder script, this requires a collider for the player to climb
+Attached to a child of the ladder script, this requires a collider for the player to climb
 
 
 <h1>Physical Interactions</h1>
@@ -266,7 +266,7 @@ Attatched to a child of the ladder script, this requires a collider for the play
 These are interactions with levers and buttons.
 
 <h3>Lever</h3>
-Attatched to the root of the level handles the movement of it
+Attached to the root of the level handles the movement of it
 <br>
 Public vars
 <br>
@@ -303,7 +303,7 @@ float springPower -> How quickly it moves back to rest position
   <br>
   ButtonTypes Button -> the button to interact with the dial
   <br>
-  int snapPoints -> The amout of points the dial can snap to
+  int snapPoints -> The amount of points the dial can snap to
   <br>
    int maxValue -> the max value of the dial rotation
    <br>
@@ -315,7 +315,7 @@ float springPower -> How quickly it moves back to rest position
   <br>
   bool autoClick -> if auto click is true button trigger happens without input being pressed
   <br>
-  float cooldownTime -> the total time inbeetween presses
+  float cooldownTime -> the total time in-between presses
   <br>
    UnityEvent DoOneActivate -> Unity event triggered when button is pressed
    <br>
