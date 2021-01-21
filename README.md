@@ -1,7 +1,7 @@
 
 Unity Version: 2020.1.17f1
 
-This project contains various tools for VR interactions using the Unity XR plugin.
+This project contains various tools for VR interactions using the Unity XR plugin. Built with URP, if you're project has SRP all the materials will be pink, but the vr itself should still work correctly.
 
 Tools contained
 
@@ -35,7 +35,17 @@ The scene lets players control a drone in different ways using dials levers and 
 <img width="759" alt="lever" src="https://user-images.githubusercontent.com/46603511/105358102-b9452980-5bc3-11eb-8dbd-fcdc8d45eb5c.png">
 <br><br>
 
-An overview of the scripts
+<h1> Importing the Unity Package</h1>
+
+If you decide to use the unity package once imported there are a few things to set up in order for this to work. 
+
+1) Go to Edit->ProjectSettings->PackageManager and ernable preview packages.
+2) Go to Window->PackageManager and go to UnityRegistry
+3) Install XR Plugin Management and XR Interaction Toolkit(this is preview so MAKE SURE PREVIEWS ARE ENABLED)
+4) If you are using a headset that requires steam vr you need to also install this package for the open vr to work https://github.com/ValveSoftware/unity-xr-plugin/releases/tag/v1.1.4
+5) Go Edit->ProjectSettings->XRPlug-In Management and check of the devices you would like to support.
+
+<h1>An overview of the scripts</h1>
 I'm going to break down the scripts here and explain all the variables that you can change via the inspector.
 
 <h1>Input</h1>
@@ -335,6 +345,9 @@ float springPower -> How quickly it moves back to rest position
   Vector2 RatioOutput -> The value of the slider
   <br>
    
+
+
+
 
 
 
