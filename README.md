@@ -35,8 +35,8 @@ The scene lets players control a drone in different ways using dials levers and 
 <img width="759" alt="lever" src="https://user-images.githubusercontent.com/46603511/105358102-b9452980-5bc3-11eb-8dbd-fcdc8d45eb5c.png">
 <br><br>
 
-An Overview of the Scripts
-I'm gonna break down the scripts here and how to set them up to work on your own assets.
+An overview of the scripts
+I'm gonna break down the scripts here and explain all the variables that you can change via the inspector.
 
 <h1>Input</h1>
 
@@ -179,18 +179,162 @@ GameObject TractorBeamPrefab -> The prefab of the pointer when a raycast finds s
 float MinTractorBeamZ -> the min length of the z scale of the pointer/beam
 <br>
 
-
-   
-
+<h2> Gun Scripts</h2>
+ The gun scripts offer a simple example of projectile or raycasting shooting with vr controls
+  
+ <h3> XR Gun </h3>
+ XR Gun handles everything to do with shooting. Attatch to a interactable object and configure to make work the way you need.
+ 
+<br>
+Public vars
+<br>
+ButtonTypes ShootButton -> The fire button 
+<br>
+bool IsReloadingEnabled -> Whether or not the gun needs to reload, if false the gun will never run out of ammo
+<br>
+int ClipSize -> if InfiniteAmmo is false this is how many bullets you can shoot before requiring a reload
+<br>
+float FireRate -> Rounds per second you can shoot
+<br>
+bool Automatic -> if true than the weapon is automatic, if false it is single fire
+<br>
+Transform ShootPosition -> An empty transform where the bullet will be shot or raycasted from
+<br>
+float ShootDistance -> The max distance of a raycast
+<br>
+LayerMask ShootRaycastLayers -> if raycasting this is the layers we will look for to register a hit
+<br>
+bool ProjectileBullet -> If true a projectile is created when fired and it takes time to reach target, if false the script raycast and hits are instant
+<br>
+float BulletPower -> The force applied to the projectile when fire
+<br>
+GameObject ProjectilePrefab -> A prefab for the projectile to be created when firing
+<br>
+AudioClip GunSound -> Sound played when firing
+<br>
+AudioClip EmptyClipSound -> Fx played when clip is empty
+<br>
+ParticleSystem GunEffect -> Particle system to play the fun effect (Muzzle flash,smoke,etc)
+<br>
+float RecoilDuration -> Duration of recoil when shooting 
+<br>
+float HorizontalRecoil -> Horizontal sway when firing 
+<br>
+float VerticalRecoil -> Vertical sway when firing
+<br>
+string ClipTag -> the tag of the ammo clip we are looking for to trigger reloading
+<br>
+ButtonTypes ClipReleaseButton -> The button that drops the mag out of the weapon
+<br>
+GameObject ClipInGun -> The clip inside the gun object, it gets hidden when the clip is dropped
+<br>
+GameObject ClipPrefab -> The prefab of the clip to spawn when reloading
+<br>
 
 <h1>UI</h1>
 
+<h3>XR_UI_Raycaster</h3>
+Scripts attatchs to a controller handles raycasting and interacting with ui elements. NOTE for it to find a ui element it needs a collider attatched to it.
+<br>
+Public vars
+<br>
+float RaycastDistance -> How far away we can select UI
+<br>
+LayerMask UILayer -> The layer in which the UI is on 
+<br>
+ButtonTypes UIInteractionButton-> Button that selects the UI
+<br>
+GameObject PointerPrefab -> The item that gets enabled when pointing at the ui
+<br>
+
+
 <h1>Climbing</h1>
+
+<h3> Ladder </h3>
+Attach to the root of the object you want to be climbable IT DOES NOT NEED TO BE A LADDER JUST ANYTHING YOU WANT TO CLIMB
+<br>
+Public vars
+<br>
+ ButtonTypes ClimbButton -> The button the player uses to climb
+<br>
+<h3> Ladder_Rung </h3>
+Attatched to a child of the ladder script, this requires a collider for the player to climb
 
 
 <h1>Physical Interactions</h1>
 
+These are interactions with levers and buttons.
 
+<h3>Lever</h3>
+Attatched to the root of the level handles the movement of it
+<br>
+Public vars
+<br>
+ButtonTypes Button -> the button to interact with the lever
+<br>
+AnimationCurve curve -> the travel path of the lever
+<br>
+float restRation -> Influences the rest pos
+<br>
+float springPower -> How quickly it moves back to rest position
+<br>
+ <h3>Slider_GrabPoint</h3>
+ Grab point used for trigger interaction
+ <h3> LeverBar</h3>
+ Attatched to the bar of the level
+ <h3>DualAxisSlider</h3>
+ Slider on both y and x axis
+ 
+ <br>
+ ButtonTypes Button -> the button to interact with the slider
+ <br>
+ bool springBackToRestRatio -> if true the slider goes back to center 
+ <br>
+ float restXRatio -> the position where the slider rest in x 
+ <br>
+  float restyRatio -> the position where the slider rest in y 
+ <br>
+ float springPower -> How quickly it moves back to rest position
+ <br>
+  Vector2 RatioOutput -> The value of the slider
+  <br>
+  
+  <h3>FixedDial</h3>
+  <br>
+  ButtonTypes Button -> the button to interact with the dial
+  <br>
+  int snapPoints -> The amout of points the dial can snap to
+  <br>
+   int maxValue -> the max value of the dial rotation
+   <br>
+    float Value -> The value of where the dial is
+    <br>
+  <h3>SimpleButton</h3>
+  <br>
+  ButtonTypes Button -> the button to interact with the button 
+  <br>
+  bool autoClick -> if auto click is true button trigger happens without input being pressed
+  <br>
+  float cooldownTime -> the total time inbeetween presses
+  <br>
+   UnityEvent DoOneActivate -> Unity event triggered when button is pressed
+   <br>
+   AudioClip clickClip -> Audio fx played when clicked
+   
+   <h3>SingleAxisSlider</h3>
+   A slider that can only move along one axis
+   <br>
+    ButtonTypes Button -> the button to interact with the slider
+    <br>
+  bool springBackToRestRatio -> if true the slider goes back to center 
+ <br>
+ float restRatio -> the position where the slider rest 
+ <br>
+  float springPower -> How quickly it moves back to rest position
+ <br>
+  Vector2 RatioOutput -> The value of the slider
+  <br>
+   
 
 
 
